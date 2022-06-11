@@ -1,0 +1,27 @@
+syntax="proto3";
+package pb;
+import "userModels.proto";
+option go_package = "/internal/service;service";
+
+message UserRequest{
+  // @inject_tag: json:"nick_name" form:"nick_name" uri:"nick_name"
+  string NickName=1;
+  // @inject_tag: json:"user_name" form:"user_name" uri:"user_name"
+  string UserName=2;
+  // @inject_tag: json:"password" form:"password" uri:"password"
+  string Password=3;
+  // @inject_tag: json:"password_confirm" form:"password_confirm" uri:"password_confirm"
+  string PasswordConfirm=4;
+}
+
+message UserDetailResponse{
+  UserModel UserDetail=1;
+  uint32 Code=2;
+}
+
+
+service UserService{
+  rpc UserLogin(UserRequest) returns(UserDetailResponse);
+  rpc UserRegister(UserRequest) returns(UserDetailResponse);
+  rpc UserLogout(UserRequest) returns(UserDetailResponse);
+}

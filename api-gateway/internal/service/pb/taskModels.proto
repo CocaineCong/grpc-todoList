@@ -1,0 +1,22 @@
+syntax="proto3";
+package pb;
+option go_package = "/internal/service;service";
+
+//protoc -I internal/service/pb internal/service/pb/*.proto --go_out=plugins=grpc:.
+
+message TaskModel {
+    // @inject_tag: json:"favorite_id"
+    uint32 TaskID=1;
+    // @inject_tag: json:"user_id"
+    uint32 UserID=2;
+    // @inject_tag: json:"status"
+    uint32 Status=3;
+    // @inject_tag: json:"title"
+    string Title=4;
+    // @inject_tag: json:"content"
+    string Content=5;
+    // @inject_tag: json:"start_time"
+    uint32 StartTime=6;
+    // @inject_tag: json:"end_time"
+    uint32 EndTime=7;
+}

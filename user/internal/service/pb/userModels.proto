@@ -1,0 +1,14 @@
+syntax="proto3";
+package pb;
+option go_package = "/internal/service;service";
+
+//protoc -I internal/service/pb internal/service/pb/*.proto --go_out=plugins=grpc:.
+
+message UserModel {
+    // @inject_tag: json:"user_id"
+    uint32 UserID=1;
+    // @inject_tag: json:"user_name"
+    string UserName=2;
+    // @inject_tag: json:"nick_name"
+    string NickName=3;
+}

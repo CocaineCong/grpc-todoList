@@ -1,0 +1,33 @@
+syntax="proto3";
+package pb;
+import "taskModels.proto";
+option go_package = "/internal/service;service";
+
+message TaskRequest{
+    uint32 TaskID=1;
+    uint32 UserID=2;
+    uint32 Status=3;
+    string Title=4;
+    string Content=5;
+    uint32 StartTime=6;
+    uint32 EndTime=7;
+}
+
+
+message TasksDetailResponse{
+  repeated TaskModel TaskDetail=1;
+  uint32 Code=2;
+}
+
+message CommonResponse{
+    uint32 Code=1;
+    string Msg=2;
+    string Data=3;
+}
+
+service TaskService{
+  rpc TaskCreate(TaskRequest) returns(CommonResponse);
+  rpc TaskUpdate(TaskRequest) returns(CommonResponse);
+  rpc TaskShow(TaskRequest) returns(TasksDetailResponse);
+  rpc TaskDelete(TaskRequest) returns(CommonResponse);
+}
