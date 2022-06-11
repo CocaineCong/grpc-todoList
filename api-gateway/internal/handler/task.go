@@ -16,7 +16,7 @@ func GetTaskList(ginCtx *gin.Context) {
 	PanicIfTaskError(ginCtx.Bind(&fReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
+	TaskService := ginCtx.Keys["task"].(service.TaskServiceClient)
 	fmt.Println(fReq)
 	TaskResp, err := TaskService.TaskShow(context.Background(), &fReq)
 	PanicIfTaskError(err)
@@ -29,11 +29,11 @@ func GetTaskList(ginCtx *gin.Context) {
 }
 
 func CreateTask(ginCtx *gin.Context) {
-	var fReq service.TasksRequest
+	var fReq service.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&fReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
+	TaskService := ginCtx.Keys["Task"].(service.TaskServiceClient)
 	TaskResp, err := TaskService.TaskCreate(context.Background(), &fReq)
 	PanicIfTaskError(err)
 	r := res.Response{
@@ -45,11 +45,11 @@ func CreateTask(ginCtx *gin.Context) {
 }
 
 func UpdateTask(ginCtx *gin.Context) {
-	var fReq service.TasksRequest
+	var fReq service.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&fReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
+	TaskService := ginCtx.Keys["task"].(service.TaskServiceClient)
 	TaskResp, err := TaskService.TaskUpdate(context.Background(), &fReq)
 	PanicIfTaskError(err)
 	r := res.Response{
@@ -62,60 +62,12 @@ func UpdateTask(ginCtx *gin.Context) {
 
 
 func DeleteTask(ginCtx *gin.Context) {
-	var fReq service.TasksRequest
+	var fReq service.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&fReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
+	TaskService := ginCtx.Keys["Tasks"].(service.TaskServiceClient)
 	TaskResp, err := TaskService.TaskDelete(context.Background(), &fReq)
-	PanicIfTaskError(err)
-	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
-	}
-	ginCtx.JSON(http.StatusOK, r)
-}
-
-func GetTaskDetail(ginCtx *gin.Context) {
-	var fReq service.TasksRequest
-	PanicIfTaskError(ginCtx.Bind(&fReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
-	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
-	TaskResp, err := TaskService.TaskDetailsShow(context.Background(), &fReq)
-	PanicIfTaskError(err)
-	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
-	}
-	ginCtx.JSON(http.StatusOK, r)
-}
-
-func CreateTaskDetail(ginCtx *gin.Context) {
-	var fReq service.TasksRequest
-	PanicIfTaskError(ginCtx.Bind(&fReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
-	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
-	TaskResp, err := TaskService.TaskDetailsCreate(context.Background(), &fReq)
-	PanicIfTaskError(err)
-	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
-	}
-	ginCtx.JSON(http.StatusOK, r)
-}
-
-func DeleteTaskDetail(ginCtx *gin.Context) {
-	var fReq service.TasksRequest
-	PanicIfTaskError(ginCtx.Bind(&fReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
-	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TasksServiceClient)
-	TaskResp, err := TaskService.TaskDetailsDelete(context.Background(), &fReq)
 	PanicIfTaskError(err)
 	r := res.Response{
 		Data:   TaskResp,
