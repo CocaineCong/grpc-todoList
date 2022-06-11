@@ -8,7 +8,7 @@ mysqlSalve2:
   driverName: mysql
   host: 127.0.0.1
   port: 3306
-  database: basicInfo
+  database: grpc_todo_list
   username: root
   password: root
   charset: utf8mb4

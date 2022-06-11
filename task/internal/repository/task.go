@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"errors"
 	"task/internal/service"
 	"task/pkg/util"
 )
@@ -10,11 +9,11 @@ import (
 type Task struct {
 	TaskID    uint   `gorm:"primarykey"` // 收藏夹id
 	UserID    uint   `gorm:"index"`      // 用户id
-	Status    int    `gorm:"default:'0'"`
+	Status    int    `gorm:"default:0"`
 	Title 	  string
 	Content   string `gorm:"type:longtext"`
 	StartTime int64
-	EndTime   int64 `gorm:"default:'0'"`
+	EndTime   int64
 }
 
 

@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"favorites/pkg/util"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -10,6 +9,7 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	"strings"
+	"task/pkg/util"
 	"time"
 )
 

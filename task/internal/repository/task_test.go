@@ -1,34 +1,27 @@
 package repository
 
 import (
-	"favorites/internal/service"
 	"fmt"
+	"task/internal/service"
 	"testing"
 )
 
-func TestCheckExist(t *testing.T) {
+func TestTasks_Create(t *testing.T) {
 	InitDB()
-	f := new(Favorites)
-	req := new(service.FavoritesRequest)
-	exist:=f.CheckExist(req)
-	fmt.Println(exist)
-}
-
-func TestFavorites_Create(t *testing.T) {
-	InitDB()
-	f := new(Favorites)
-	req := new(service.FavoritesRequest)
-	req.FavoriteName="38324"
+	f := new(Task)
+	req := new(service.TaskRequest)
+	req.UserID=4
+	req.UserID=4
 	req.UserID=4
 	err := f.Create(req)
 	fmt.Println(err)
 }
 
-func TestFavorites_Show(t *testing.T) {
+func TestTasks_Show(t *testing.T) {
 	InitDB()
-	f := new(Favorites)
-	req := new(service.FavoritesRequest)
-	req.UserID=4
+	f := new(Task)
+	req := new(service.TaskRequest)
+	req.UserID=1
 	res,err := f.Show(req)
 	if err != nil {
 		fmt.Println(err)
@@ -36,21 +29,21 @@ func TestFavorites_Show(t *testing.T) {
 	fmt.Println(res)
 }
 
-func TestFavorites_Update(t *testing.T) {
+func TestTasks_Update(t *testing.T) {
 	InitDB()
-	f := new(Favorites)
-	req := new(service.FavoritesRequest)
-	req.FavoriteID=1
-	req.FavoriteName="knowledge again"
+	f := new(Task)
+	req := new(service.TaskRequest)
+	req.TaskID=1
+	req.TaskName="knowledge again"
 	err := f.Update(req)
 	fmt.Println(err)
 }
 
-func TestFavorites_Delete(t *testing.T) {
+func TestTasks_Delete(t *testing.T) {
 	InitDB()
-	f := new(Favorites)
-	req := new(service.FavoritesRequest)
-	req.FavoriteID=1
+	f := new(Task)
+	req := new(service.TaskRequest)
+	req.TaskID = 1
 	err := f.Delete(req)
 	fmt.Println(err)
 }
