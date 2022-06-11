@@ -1,3 +1,0 @@
-time="2022-06-07 17:04:11" level=info msg="searchEngineService--rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:7381->127.0.0.1:10004: wsarecv: An existing connection was forcibly closed by the remote host."
-time="2022-06-07 17:10:27" level=info msg="searchEngineService--rpc error: code = Unknown desc = 插入数据的类型必须为字符串类型的键值对，键值都必须为字符串，不能有复杂层级,收到：[]*service.PostData"
-time="2022-06-07 17:18:47" level=info msg="searchEngineService--rpc error: code = Unknown desc = 插入数据的类型必须为字符串类型的键值对，键值都必须为字符串，不能有复杂层级,收到：[]*service.PostData"
