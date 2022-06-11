@@ -33,7 +33,7 @@ func CreateTask(ginCtx *gin.Context) {
 	PanicIfTaskError(ginCtx.Bind(&fReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Task"].(service.TaskServiceClient)
+	TaskService := ginCtx.Keys["task"].(service.TaskServiceClient)
 	TaskResp, err := TaskService.TaskCreate(context.Background(), &fReq)
 	PanicIfTaskError(err)
 	r := res.Response{
@@ -66,7 +66,7 @@ func DeleteTask(ginCtx *gin.Context) {
 	PanicIfTaskError(ginCtx.Bind(&fReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	fReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["Tasks"].(service.TaskServiceClient)
+	TaskService := ginCtx.Keys["task"].(service.TaskServiceClient)
 	TaskResp, err := TaskService.TaskDelete(context.Background(), &fReq)
 	PanicIfTaskError(err)
 	r := res.Response{

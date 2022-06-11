@@ -16,12 +16,12 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	host := viper.GetString("mysqlSalve2.host")
-	port := viper.GetString("mysqlSalve2.port")
-	database := viper.GetString("mysqlSalve2.database")
-	username := viper.GetString("mysqlSalve2.username")
-	password := viper.GetString("mysqlSalve2.password")
-	charset := viper.GetString("mysqlSalve2.charset")
+	host := viper.GetString("mysql.host")
+	port := viper.GetString("mysql.port")
+	database := viper.GetString("mysql.database")
+	username := viper.GetString("mysql.username")
+	password := viper.GetString("mysql.password")
+	charset := viper.GetString("mysql.charset")
 	dsn := strings.Join([]string{username, ":", password, "@tcp(", host, ":", port, ")/", database, "?charset=" + charset + "&parseTime=true"}, "")
 	err := Database(dsn)
 	if err != nil {

@@ -1,10 +1,10 @@
 server:
-  domain: favorites
+  domain: task
   version: 1.0
   jwtSecret: 38324
   grpcAddress: "127.0.0.1:10002"
 
-mysqlSalve2:
+mysql:
   driverName: mysql
   host: 127.0.0.1
   port: 3306

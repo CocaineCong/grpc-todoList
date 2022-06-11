@@ -27,6 +27,7 @@ func (*Task) Show (req *service.TaskRequest)(taskList []Task,err error) {
 
 func (*Task) Create (req *service.TaskRequest) error {
 	task := Task{
+		UserID: uint(req.UserID),
 		Title : req.Title,
 		Content : req.Content,
 		Status : int(req.Status),

@@ -1,0 +1,657 @@
+{
+	"info": {
+		"_postman_id": "e22e800c-7321-4511-9d51-b846ebf6141d",
+		"name": "gRPC-todoList",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10242828"
+	},
+	"item": [
+		{
+			"name": "用户模块",
+			"item": [
+				{
+					"name": "用户注册",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UserName",
+									"value": "FanOne",
+									"type": "text"
+								},
+								{
+									"key": "NickName",
+									"value": "CocaineCong",
+									"type": "text"
+								},
+								{
+									"key": "Password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "PasswordConfirm",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "用户注册",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "UserName",
+											"value": "FanOne",
+											"type": "text"
+										},
+										{
+											"key": "NickName",
+											"value": "CocaineCong",
+											"type": "text"
+										},
+										{
+											"key": "Password",
+											"value": "12345678",
+											"type": "text"
+										},
+										{
+											"key": "PasswordConfirm",
+											"value": "12345678",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/user/register",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jun 2022 15:54:00 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"UserDetail\": {},\n        \"Code\": 200\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "用户登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "UserName",
+									"value": "FanOne",
+									"type": "text"
+								},
+								{
+									"key": "Password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "用户登录",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "UserName",
+											"value": "FanOne",
+											"type": "text"
+										},
+										{
+											"key": "Password",
+											"value": "12345678",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jun 2022 15:55:25 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "278"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"User\": {\n            \"UserID\": 1,\n            \"UserName\": \"FanOne\",\n            \"NickName\": \"CocaineCong\"\n        },\n        \"Token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTUwNDkzMjUsImlzcyI6IjM4Mzg0LVNlYXJjaEVuZ2luZSJ9.uvJ4-wbCo3jJgJ5stSK8cb4J5lKEV2ft1ucCJ5v8r58\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "任务模块",
+			"item": [
+				{
+					"name": "创建备忘录",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Title",
+									"value": "一键三连",
+									"type": "text"
+								},
+								{
+									"key": "Content",
+									"value": "我太喜欢一键三连啦！",
+									"type": "text"
+								},
+								{
+									"key": "Status",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "StartTime",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "EndTime",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/task",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "创建备忘录",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Title",
+											"value": "一键三连",
+											"type": "text"
+										},
+										{
+											"key": "Content",
+											"value": "我太喜欢一键三连啦！",
+											"type": "text"
+										},
+										{
+											"key": "Status",
+											"value": "0",
+											"type": "text"
+										},
+										{
+											"key": "StartTime",
+											"value": "0",
+											"type": "text"
+										},
+										{
+											"key": "EndTime",
+											"value": "0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/task",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jun 2022 16:03:42 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"Code\": 200,\n        \"Msg\": \"ok\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "获取备忘录列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/task",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "获取备忘录列表",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/task",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jun 2022 16:08:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "161"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"TaskDetail\": [\n            {\n                \"TaskID\": 4,\n                \"UserID\": 1,\n                \"Title\": \"一键三连\",\n                \"Content\": \"我太喜欢一键三连啦！\"\n            }\n        ],\n        \"Code\": 200\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "修改备忘录",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "TaskID",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "Title",
+									"value": "我太喜欢点赞了！",
+									"type": "text"
+								},
+								{
+									"key": "Content",
+									"value": "拒绝白嫖，从我做起",
+									"type": "text"
+								},
+								{
+									"key": "Status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "StartTime",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "EndTime",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/task",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "修改备忘录",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "TaskID",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "Title",
+											"value": "我太喜欢点赞了！",
+											"type": "text"
+										},
+										{
+											"key": "Content",
+											"value": "拒绝白嫖，从我做起",
+											"type": "text"
+										},
+										{
+											"key": "Status",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "StartTime",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "EndTime",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/task",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jun 2022 16:10:24 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"Code\": 200,\n        \"Msg\": \"ok\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+						}
+					]
+				},
+				{
+					"name": "删除备忘录",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/task",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "删除备忘录",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "TaskID",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/task",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 Jun 2022 16:12:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"Code\": 200,\n        \"Msg\": \"ok\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "测试连接",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/ping",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "测试连接",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/ping",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"ping"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 11 Jun 2022 15:46:00 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "9"
+						}
+					],
+					"cookie": [],
+					"body": "\"success\""
+				}
+			]
+		}
+	]
+}
