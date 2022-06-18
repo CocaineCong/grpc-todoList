@@ -19,3 +19,4 @@ api-gateway/config/config.yml
 api-gateway/logs
 user/logs
 task/logs
+.idea
