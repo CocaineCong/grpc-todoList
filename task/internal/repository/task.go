@@ -5,19 +5,17 @@ import (
 	"task/pkg/util"
 )
 
-
 type Task struct {
-	TaskID    uint   `gorm:"primarykey"` // 收藏夹id
-	UserID    uint   `gorm:"index"`      // 用户id
-	Status    int    `gorm:"default:0"`
-	Title 	  string
+	TaskID    uint `gorm:"primarykey"` // id
+	UserID    uint `gorm:"index"`      // 用户id
+	Status    int  `gorm:"default:0"`
+	Title     string
 	Content   string `gorm:"type:longtext"`
 	StartTime int64
 	EndTime   int64
 }
 
-
-func (*Task) Show (req *service.TaskRequest)(taskList []Task,err error) {
+func (*Task) Show(req *service.TaskRequest) (taskList []Task, err error) {
 	err = DB.Model(Task{}).Where("user_id=?", req.UserID).Find(&taskList).Error
 	if err != nil {
 		return taskList, err
@@ -25,14 +23,14 @@ func (*Task) Show (req *service.TaskRequest)(taskList []Task,err error) {
 	return taskList, nil
 }
 
-func (*Task) Create (req *service.TaskRequest) error {
+func (*Task) Create(req *service.TaskRequest) error {
 	task := Task{
-		UserID: uint(req.UserID),
-		Title : req.Title,
-		Content : req.Content,
-		Status : int(req.Status),
-		StartTime : int64(req.StartTime),
-		EndTime : int64(req.EndTime),
+		UserID:    uint(req.UserID),
+		Title:     req.Title,
+		Content:   req.Content,
+		Status:    int(req.Status),
+		StartTime: int64(req.StartTime),
+		EndTime:   int64(req.EndTime),
 	}
 	if err := DB.Create(&task).Error; err != nil {
 		util.LogrusObj.Error("Insert Task Error:" + err.Error())
@@ -61,12 +59,12 @@ func (*Task) Update(req *service.TaskRequest) error {
 	return err
 }
 
-func BuildTasks(item []Task) (fList []*service.TaskModel) {
-	for _,v := range item{
+func BuildTasks(item []Task) (tList []*service.TaskModel) {
+	for _, v := range item {
 		f := BuildTask(v)
-		fList = append(fList,f)
+		tList = append(tList, f)
 	}
-	return fList
+	return tList
 }
 
 func BuildTask(item Task) *service.TaskModel {

@@ -38,12 +38,11 @@ func startListen() {
 	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
 	}
-	userConn, _ := grpc.Dial("127.0.0.1:10001", opts...)
+	userConn, _ := grpc.Dial(viper.GetString("domain.user"), opts...)
 	userService := service.NewUserServiceClient(userConn)
 
-	taskConn, _ := grpc.Dial("127.0.0.1:10002", opts...)
+	taskConn, _ := grpc.Dial(viper.GetString("domain.task"), opts...)
 	taskService := service.NewTaskServiceClient(taskConn)
-
 
 	ginRouter := routes.NewRouter(userService, taskService)
 	server := &http.Server{

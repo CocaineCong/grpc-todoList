@@ -15,3 +15,7 @@ datasource:
 redis:
   address: 127.0.0.1:6379
   password:
+
+domain:
+  user: 127.0.0.1:10001
+  task: 127.0.0.1:10002

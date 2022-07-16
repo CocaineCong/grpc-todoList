@@ -131,7 +131,7 @@ func (r *Register) keepAlive() {
 }
 
 func (r *Register) UpdateHandler() http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
 		weightstr := req.URL.Query().Get("weight")
 		weight, err := strconv.Atoi(weightstr)
 		if err != nil {
@@ -158,7 +158,7 @@ func (r *Register) UpdateHandler() http.HandlerFunc {
 		}
 
 		_, _ = w.Write([]byte("update server weight success"))
-	})
+	}
 }
 
 func (r *Register) GetServerInfo() (Server, error) {
