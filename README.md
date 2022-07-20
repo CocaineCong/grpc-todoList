@@ -24,7 +24,6 @@ api-gateway/
 ├── discovery             // etcd服务注册、keep-alive、获取服务信息等等
 ├── internal              // 业务逻辑（不对外暴露）
 │   ├── handler           // 视图层
-│   ├── repository        // 持久层
 │   └── service           // 服务层
 │       └──pb             // 放置生成的pb文件
 ├── logs                  // 放置打印日志模块
@@ -52,14 +51,17 @@ user/
 │   └── service           // 服务层
 │       └──pb             // 放置生成的pb文件
 ├── logs                  // 放置打印日志模块
-├── pkg                   // 各种包
-│   ├── e                 // 统一错误状态码
-│   ├── res               // 统一response接口返回
-│   └── util              // 各种工具、JWT、Logger等等..
-├── routes                // http路由模块
-└── wrappers              // 各个服务之间的熔断降级
+└── pkg                   // 各种包
+    ├── e                 // 统一错误状态码
+    ├── res               // 统一response接口返回
+    └── util              // 各种工具、JWT、Logger等等..
 ```
 
+# 项目完善
+现在已经新建了t0分支，欢迎大家将自己的想法pr到t0分支，测试无误之后，我们将合并到main分支。
+
+- 添加熔断机制
+- ....其他想法
 
 # 项目文件配置
 

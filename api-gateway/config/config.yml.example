@@ -3,15 +3,6 @@ server:
   version: 1.0
   jwtSecret: 38324
 
-datasource:
-  driverName: mysqlMaster
-  host: 127.0.0.1
-  port: 3306
-  database: basicInfo
-  username: root
-  password: root
-  charset: utf8mb4
-
 redis:
   address: 127.0.0.1:6379
   password:
