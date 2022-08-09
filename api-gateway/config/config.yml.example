@@ -7,6 +7,9 @@ redis:
   address: 127.0.0.1:6379
   password:
 
+etcd:
+  address: 127.0.0.1:2379
+
 domain:
-  user: 127.0.0.1:10001
-  task: 127.0.0.1:10002
+  user: user
+  task: task

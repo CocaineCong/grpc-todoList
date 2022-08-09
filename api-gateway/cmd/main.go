@@ -5,6 +5,7 @@ import (
 	"api-gateway/internal/service"
 	"api-gateway/pkg/util"
 	"api-gateway/routes"
+	"context"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -22,8 +23,10 @@ func main() {
 	// etcd注册
 	etcdAddress := []string{viper.GetString("etcd.address")}
 	etcdRegister := discovery.NewResolver(etcdAddress, logrus.New())
-	defer etcdRegister.Close()
 	resolver.Register(etcdRegister)
+	fmt.Println("etcdRegister.Scheme()", etcdRegister.Scheme())
+	defer etcdRegister.Close()
+	//conn, err := grpc.Dial(etcdRegister.Scheme()+"://"+o.Caller+"/"+o.Callee, grpc.WithDefaultServiceConfig(fmt.Sprintf(`{"LoadBalancingPolicy": "%s"}`, roundrobin.Name)), grpc.WithInsecure())
 	go startListen() //转载路由
 	{
 		osSignals := make(chan os.Signal, 1)
@@ -38,10 +41,19 @@ func startListen() {
 	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
 	}
-	userConn, _ := grpc.Dial(viper.GetString("domain.user"), opts...)
-	userService := service.NewUserServiceClient(userConn)
+	etcdAddress := []string{viper.GetString("etcd.address")}
+	etcdRegister := discovery.NewResolver(etcdAddress, logrus.New())
+	resolver.Register(etcdRegister)
+	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
 
-	taskConn, _ := grpc.Dial(viper.GetString("domain.task"), opts...)
+	userAddr := fmt.Sprintf("%s:///%s", etcdRegister.Scheme(),
+		viper.GetString("domain.user"))
+	taskConn, err := grpc.DialContext(ctx, userAddr, opts...)
+	userService := service.NewUserServiceClient(taskConn)
+
+	taskAddr := fmt.Sprintf("%s:///%s", etcdRegister.Scheme(),
+		viper.GetString("domain.task"))
+	taskConn, err = grpc.DialContext(ctx, taskAddr, opts...)
 	taskService := service.NewTaskServiceClient(taskConn)
 
 	ginRouter := routes.NewRouter(userService, taskService)
@@ -52,7 +64,7 @@ func startListen() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		fmt.Println("绑定HTTP到 %s 失败！可能是端口已经被占用，或用户权限不足")
 		fmt.Println(err)
