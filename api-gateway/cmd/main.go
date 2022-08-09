@@ -20,13 +20,6 @@ import (
 
 func main() {
 	InitConfig()
-	// etcd注册
-	etcdAddress := []string{viper.GetString("etcd.address")}
-	etcdRegister := discovery.NewResolver(etcdAddress, logrus.New())
-	resolver.Register(etcdRegister)
-	fmt.Println("etcdRegister.Scheme()", etcdRegister.Scheme())
-	defer etcdRegister.Close()
-	//conn, err := grpc.Dial(etcdRegister.Scheme()+"://"+o.Caller+"/"+o.Callee, grpc.WithDefaultServiceConfig(fmt.Sprintf(`{"LoadBalancingPolicy": "%s"}`, roundrobin.Name)), grpc.WithInsecure())
 	go startListen() //转载路由
 	{
 		osSignals := make(chan os.Signal, 1)
@@ -41,6 +34,7 @@ func startListen() {
 	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
 	}
+	// etcd注册
 	etcdAddress := []string{viper.GetString("etcd.address")}
 	etcdRegister := discovery.NewResolver(etcdAddress, logrus.New())
 	resolver.Register(etcdRegister)
