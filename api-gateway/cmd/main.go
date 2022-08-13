@@ -3,6 +3,7 @@ package main
 import (
 	"api-gateway/discovery"
 	"api-gateway/internal/service"
+	"api-gateway/middleware/wrapper"
 	"api-gateway/pkg/util"
 	"api-gateway/routes"
 	"context"
@@ -31,25 +32,32 @@ func main() {
 }
 
 func startListen() {
-	opts := []grpc.DialOption{
-		grpc.WithInsecure(),
-	}
 	// etcd注册
 	etcdAddress := []string{viper.GetString("etcd.address")}
 	etcdRegister := discovery.NewResolver(etcdAddress, logrus.New())
 	resolver.Register(etcdRegister)
 	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
+	// 服务名
+	userServiceName := viper.GetString("domain.user")
+	taskServiceName := viper.GetString("domain.task")
 
-	userAddr := fmt.Sprintf("%s:///%s", etcdRegister.Scheme(),
-		viper.GetString("domain.user"))
-	taskConn, err := grpc.DialContext(ctx, userAddr, opts...)
-	userService := service.NewUserServiceClient(taskConn)
+	// RPC 连接
+	connUser, err := RPCConnect(ctx, userServiceName, etcdRegister)
+	if err != nil {
+		return
+	}
+	userService := service.NewUserServiceClient(connUser)
 
-	taskAddr := fmt.Sprintf("%s:///%s", etcdRegister.Scheme(),
-		viper.GetString("domain.task"))
-	taskConn, err = grpc.DialContext(ctx, taskAddr, opts...)
-	taskService := service.NewTaskServiceClient(taskConn)
+	connTask, err := RPCConnect(ctx, taskServiceName, etcdRegister)
+	if err != nil {
+		return
+	}
+	taskService := service.NewTaskServiceClient(connTask)
 
+	// 加入熔断 TODO main太臃肿了
+	wrapper.NewServiceWrapper(userServiceName)
+	wrapper.NewServiceWrapper(taskServiceName)
+	
 	ginRouter := routes.NewRouter(userService, taskService)
 	server := &http.Server{
 		Addr:           viper.GetString("server.port"),
@@ -70,6 +78,15 @@ func startListen() {
 	if err := server.ListenAndServe(); err != nil {
 		fmt.Println("gateway启动失败, err: ", err)
 	}
+}
+
+func RPCConnect(ctx context.Context, serviceName string, etcdRegister *discovery.Resolver) (conn *grpc.ClientConn, err error) {
+	opts := []grpc.DialOption{
+		grpc.WithInsecure(),
+	}
+	addr := fmt.Sprintf("%s:///%s", etcdRegister.Scheme(), serviceName)
+	conn, err = grpc.DialContext(ctx, addr, opts...)
+	return
 }
 
 func InitConfig() {

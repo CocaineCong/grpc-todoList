@@ -1,8 +1,9 @@
 package e
 
 var MsgFlags = map[uint]string{
-	SUCCESS:                    "ok",
-	ERROR:                      "fail",
+	SUCCESS: "ok",
+	ERROR:   "fail",
+
 	InvalidParams:              "请求参数错误",
 	HaveSignUp:                 "已经报名了",
 	ErrorActivityTimeout:       "活动过期了",
@@ -13,6 +14,9 @@ var MsgFlags = map[uint]string{
 	ErrorNotCompare:            "不匹配",
 	ErrorDatabase:              "数据库操作出错,请重试",
 	ErrorAuthNotFound:          "Token不能为空",
+
+	ErrorServiceUnavailable: "过载保护，服务暂时不可用",
+	ErrorDeadline:           "服务调用超时",
 }
 
 // GetMsg 获取状态码对应信息
