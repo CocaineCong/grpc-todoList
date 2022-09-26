@@ -1,15 +1,15 @@
 package res
 
 import (
-	"api-gateway/pkg/e"
 	"net/http"
+	"user/pkg/e"
 
 	"github.com/gin-gonic/gin"
 )
 
 // Response 基础序列化器
 type Response struct {
-	Status uint         `json:"status"`
+	Status uint        `json:"status"`
 	Data   interface{} `json:"data"`
 	Msg    string      `json:"msg"`
 	Error  string      `json:"error"`
@@ -55,8 +55,7 @@ func Error(ctx *gin.Context, httpCode, msgCode int) {
 func ginH(msgCode int, data interface{}) gin.H {
 	return gin.H{
 		"code": msgCode,
-		"msg":  e.GetMsg(msgCode),
+		"msg":  e.GetMsg(uint(msgCode)),
 		"data": data,
 	}
 }
-
