@@ -1,6 +1,7 @@
-package repository
+package dao
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"time"
@@ -12,10 +13,10 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
-	"user/pkg/util"
+	"github.com/CocaineCong/grpc-todolist/pkg/util"
 )
 
-var DB *gorm.DB
+var _db *gorm.DB
 
 func InitDB() {
 	host := viper.GetString("mysql.host")
@@ -25,6 +26,7 @@ func InitDB() {
 	password := viper.GetString("mysql.password")
 	charset := viper.GetString("mysql.charset")
 	dsn := strings.Join([]string{username, ":", password, "@tcp(", host, ":", port, ")/", database, "?charset=" + charset + "&parseTime=true"}, "")
+	// dsn := strings.Join([]string{"root", ":", "root", "@tcp(", "127.0.0.1", ":", "3306", ")/", "basicInfo", "?charset=" + "utf8mb4" + "&parseTime=true"}, "")
 	err := Database(dsn)
 	if err != nil {
 		fmt.Println(err)
@@ -59,7 +61,12 @@ func Database(connString string) error {
 	sqlDB.SetMaxIdleConns(20)  // 设置连接池，空闲
 	sqlDB.SetMaxOpenConns(100) // 打开
 	sqlDB.SetConnMaxLifetime(time.Second * 30)
-	DB = db
+	_db = db
 	migration()
 	return err
+}
+
+func NewDBClient(ctx context.Context) *gorm.DB {
+	db := _db
+	return db.WithContext(ctx)
 }

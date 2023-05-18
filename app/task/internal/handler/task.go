@@ -3,9 +3,9 @@ package handler
 import (
 	"context"
 
-	"task/internal/repository"
-	"task/internal/service"
-	"task/pkg/e"
+	"github.com/CocaineCong/grpc-todolist/internal/repository"
+	"github.com/CocaineCong/grpc-todolist/internal/service"
+	"github.com/CocaineCong/grpc-todolist/pkg/e"
 )
 
 type TaskService struct {

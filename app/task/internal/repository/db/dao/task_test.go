@@ -1,4 +1,4 @@
-package repository
+package dao
 
 //
 // func TestTasks_Create(t *testing.T) {

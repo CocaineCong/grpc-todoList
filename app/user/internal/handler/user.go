@@ -2,24 +2,29 @@ package handler
 
 import (
 	"context"
+	"sync"
 
-	"user/internal/repository"
-	"user/internal/service"
-	"user/pkg/e"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/user"
+	"github.com/CocaineCong/grpc-todolist/pkg/e"
 )
 
-type UserService struct {
+var UserSrvIns *UserSrv
+var UserSrvOnce sync.Once
+
+type UserSrv struct {
 }
 
-func NewUserService() *UserService {
-	return &UserService{}
+func GetUserSrv() *UserSrv {
+	UserSrvOnce.Do(func() {
+		UserSrvIns = &UserSrv{}
+	})
+	return UserSrvIns
 }
 
-func (*UserService) UserLogin(ctx context.Context, req *service.UserRequest) (resp *service.UserDetailResponse, err error) {
-	var user repository.User
-	resp = new(service.UserDetailResponse)
+func (u *UserSrv) UserLogin(ctx context.Context, req *userPb.UserRequest) (resp *userPb.UserDetailResponse, err error) {
+	resp = new(userPb.UserDetailResponse)
 	resp.Code = e.SUCCESS
-	err = user.ShowUserInfo(req)
+	err = dao..ShowUserInfo(req)
 	if err != nil {
 		resp.Code = e.ERROR
 		return resp, err
@@ -28,7 +33,7 @@ func (*UserService) UserLogin(ctx context.Context, req *service.UserRequest) (re
 	return resp, nil
 }
 
-func (*UserService) UserRegister(ctx context.Context, req *service.UserRequest) (resp *service.UserDetailResponse, err error) {
+func (u *UserSrv) UserRegister(ctx context.Context, req *service.UserRequest) (resp *service.UserDetailResponse, err error) {
 	var user repository.User
 	resp = new(service.UserDetailResponse)
 	resp.Code = e.SUCCESS
@@ -41,7 +46,7 @@ func (*UserService) UserRegister(ctx context.Context, req *service.UserRequest) 
 	return resp, nil
 }
 
-func (*UserService) UserLogout(ctx context.Context, req *service.UserRequest) (resp *service.UserDetailResponse, err error) {
+func (u *UserSrv)  UserLogout(ctx context.Context, req *service.UserRequest) (resp *service.UserDetailResponse, err error) {
 	resp = new(service.UserDetailResponse)
 	return resp, nil
 }

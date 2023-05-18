@@ -1,43 +1,24 @@
-package repository
+package dao
 
 import (
+	"context"
 	"errors"
 
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
-	"user/internal/service"
-	"user/pkg/util"
+	"github.com/CocaineCong/grpc-todolist/idl/user"
+	"github.com/CocaineCong/grpc-todolist/pkg/util"
 )
 
-type User struct {
-	UserID         uint   `gorm:"primarykey"`
-	UserName       string `gorm:"unique"`
-	NickName       string
-	PasswordDigest string
+type UserDao struct {
+	*gorm.DB
 }
 
-const (
-	PassWordCost = 12 // 密码加密难度
-)
-
-// 加密密码
-func (user *User) SetPassword(password string) error {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), PassWordCost)
-	if err != nil {
-		return err
-	}
-	user.PasswordDigest = string(bytes)
-	return nil
+func NewUserDao(ctx context.Context) *UserDao {
+	return &UserDao{NewDBClient(ctx)}
 }
 
-// 检验密码
-func (user *User) CheckPassword(password string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(user.PasswordDigest), []byte(password))
-	return err == nil
-}
-
-func (user *User) CheckUserExist(req *service.UserRequest) bool {
+func (user *User) CheckUserExist(req *user.UserRequest) bool {
 	if err := DB.Where("user_name=?", req.UserName).First(&user).Error; err == gorm.ErrRecordNotFound {
 		return false
 	}

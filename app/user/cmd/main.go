@@ -8,16 +8,16 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 
-	"user/config"
-	"user/discovery"
-	"user/internal/handler"
-	"user/internal/repository"
-	"user/internal/service"
+	"github.com/CocaineCong/grpc-todolist/app/user/internal/handler"
+	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/dao"
+	"github.com/CocaineCong/grpc-todolist/config"
+	"github.com/CocaineCong/grpc-todolist/idl/user"
+	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
 )
 
 func main() {
 	config.InitConfig()
-	repository.InitDB()
+	dao.InitDB()
 	// etcd 地址
 	etcdAddress := []string{viper.GetString("etcd.address")}
 	// 服务注册
@@ -31,7 +31,7 @@ func main() {
 	server := grpc.NewServer()
 	defer server.Stop()
 	// 绑定service
-	service.RegisterUserServiceServer(server, handler.NewUserService())
+	user.RegisterUserServiceServer(server, handler.NewUserService())
 	lis, err := net.Listen("tcp", grpcAddress)
 	if err != nil {
 		panic(err)
