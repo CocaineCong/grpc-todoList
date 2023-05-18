@@ -13,10 +13,10 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-user/config/config.yml
-task/config/config.yml
-api-gateway/config/config.yml
-api-gateway/logs
-user/logs
-task/logs
+app/user/config/config.yml
+app/task/config/config.yml
+config/config.yml
+app/gateway/logs
+app/user/logs
+app/task/logs
 .idea

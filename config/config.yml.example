@@ -1,0 +1,41 @@
+server:
+  port: :4000
+  version: 1.0
+  jwtSecret: 38324
+
+mysql:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: todolist
+  username: todolist
+  password: todolist
+  charset: utf8mb4
+
+redis:
+  address: 127.0.0.1:6379
+  password:
+
+etcd:
+  address: 127.0.0.1:2379
+
+services:
+  gateway:
+    name: gateway
+    load-balance: true
+    addr:
+      - 127.0.0.1:10001
+  user:
+    name: user
+    load-balance: false
+    addr:
+      - 127.0.0.1:10002
+  task:
+    name: task
+    load-balance: false
+    addr:
+      - 127.0.0.1:10003
+
+domain:
+  user: user
+  task: task
