@@ -6,7 +6,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/CocaineCong/grpc-todolist/idl/user"
+	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/model"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/user"
 	"github.com/CocaineCong/grpc-todolist/pkg/util"
 )
 
@@ -18,45 +19,32 @@ func NewUserDao(ctx context.Context) *UserDao {
 	return &UserDao{NewDBClient(ctx)}
 }
 
-func (user *User) CheckUserExist(req *user.UserRequest) bool {
-	if err := DB.Where("user_name=?", req.UserName).First(&user).Error; err == gorm.ErrRecordNotFound {
-		return false
-	}
-	return true
+// GetUserInfo 获取用户信息
+func (dao *UserDao) GetUserInfo(req *userPb.UserRequest) (r *model.User, err error) {
+	err = dao.Model(&model.User{}).Where("user_name=?", req.UserName).
+		First(&r).Error
+
+	return
 }
 
-func (user *User) ShowUserInfo(req *service.UserRequest) (err error) {
-	if exist := user.CheckUserExist(req); exist {
-		return nil
-	}
-	return errors.New("UserName Not Exist")
-}
-
-func (*User) Create(req *service.UserRequest) error {
-	var user User
+// CreateUser 用户创建
+func (dao *UserDao) CreateUser(req *userPb.UserRequest) (err error) {
+	var user model.User
 	var count int64
-	DB.Where("user_name=?", req.UserName).Count(&count)
+	dao.Model(&model.User{}).Where("user_name = ?", req.UserName).Count(&count)
 	if count != 0 {
 		return errors.New("UserName Exist")
 	}
-	user = User{
+
+	user = model.User{
 		UserName: req.UserName,
 		NickName: req.NickName,
 	}
 	_ = user.SetPassword(req.Password)
-	if err := DB.Create(&user).Error; err != nil {
+	if err = dao.Model(&model.User{}).Create(&user).Error; err != nil {
 		util.LogrusObj.Error("Insert User Error:" + err.Error())
-		return err
+		return
 	}
-	return nil
-}
 
-// 视图返回
-func BuildUser(item User) *service.UserModel {
-	userModel := service.UserModel{
-		UserID:   uint32(item.UserID),
-		NickName: item.NickName,
-		UserName: item.UserName,
-	}
-	return &userModel
+	return
 }

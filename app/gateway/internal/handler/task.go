@@ -6,18 +6,18 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	taskPb "github.com/CocaineCong/grpc-todolist/idl/task"
+	"github.com/CocaineCong/grpc-todolist/idl/task/pb"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
 	"github.com/CocaineCong/grpc-todolist/pkg/util"
 )
 
 func GetTaskList(ginCtx *gin.Context) {
-	var tReq taskPb.TaskRequest
+	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["task"].(taskPb.TaskServiceClient)
+	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskShow(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
@@ -29,11 +29,11 @@ func GetTaskList(ginCtx *gin.Context) {
 }
 
 func CreateTask(ginCtx *gin.Context) {
-	var tReq taskPb.TaskRequest
+	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["task"].(taskPb.TaskServiceClient)
+	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskCreate(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
@@ -45,11 +45,11 @@ func CreateTask(ginCtx *gin.Context) {
 }
 
 func UpdateTask(ginCtx *gin.Context) {
-	var tReq taskPb.TaskRequest
+	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["task"].(taskPb.TaskServiceClient)
+	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskUpdate(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
@@ -61,11 +61,11 @@ func UpdateTask(ginCtx *gin.Context) {
 }
 
 func DeleteTask(ginCtx *gin.Context) {
-	var tReq taskPb.TaskRequest
+	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
 	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
-	TaskService := ginCtx.Keys["task"].(taskPb.TaskServiceClient)
+	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskDelete(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{

@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	userPb "github.com/CocaineCong/grpc-todolist/idl/user"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
 	"github.com/CocaineCong/grpc-todolist/pkg/util"

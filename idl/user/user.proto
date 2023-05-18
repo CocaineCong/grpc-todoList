@@ -1,7 +1,5 @@
 syntax="proto3";
-package pb;
-import "userModels.proto";
-option go_package = "/internal/user;user";
+option go_package = "user/";
 
 message UserRequest{
   // @inject_tag: json:"nick_name" form:"nick_name" uri:"nick_name"
@@ -15,10 +13,9 @@ message UserRequest{
 }
 
 message UserDetailResponse{
-  UserModel UserDetail=1;
-  uint32 Code=2;
+  UserRequest UserDetail=1;
+  int64 Code=2;
 }
-
 
 service UserService{
   rpc UserLogin(UserRequest) returns(UserDetailResponse);
