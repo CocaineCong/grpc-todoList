@@ -1,27 +1,29 @@
 package main
 
 import (
-	"api-gateway/discovery"
-	"api-gateway/internal/service"
-	"api-gateway/middleware/wrapper"
-	"api-gateway/pkg/util"
-	"api-gateway/routes"
 	"context"
 	"fmt"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/resolver"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/resolver"
+
+	"api-gateway/discovery"
+	"api-gateway/internal/service"
+	"api-gateway/middleware/wrapper"
+	"api-gateway/pkg/util"
+	"api-gateway/routes"
 )
 
 func main() {
 	InitConfig()
-	go startListen() //转载路由
+	go startListen() // 转载路由
 	{
 		osSignals := make(chan os.Signal, 1)
 		signal.Notify(osSignals, os.Interrupt, os.Kill, syscall.SIGTERM, syscall.SIGINT, syscall.SIGKILL)
@@ -57,7 +59,7 @@ func startListen() {
 	// 加入熔断 TODO main太臃肿了
 	wrapper.NewServiceWrapper(userServiceName)
 	wrapper.NewServiceWrapper(taskServiceName)
-	
+
 	ginRouter := routes.NewRouter(userService, taskService)
 	server := &http.Server{
 		Addr:           viper.GetString("server.port"),
