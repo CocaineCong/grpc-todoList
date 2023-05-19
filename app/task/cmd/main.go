@@ -5,33 +5,32 @@ import (
 	"net"
 
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 
-	"task/config"
-	"task/discovery"
-	"task/internal/handler"
-	"task/internal/repository"
-	"task/internal/service"
+	"github.com/CocaineCong/grpc-todolist/app/task/internal/handler"
+	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/dao"
+	"github.com/CocaineCong/grpc-todolist/config"
+	taskPb "github.com/CocaineCong/grpc-todolist/idl/task/pb"
+	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
 )
 
 func main() {
 	config.InitConfig()
-	repository.InitDB()
+	dao.InitDB()
 	// etcd 地址
-	etcdAddress := []string{viper.GetString("etcd.address")}
+	etcdAddress := []string{config.Conf.Etcd.Address}
 	// 服务注册
 	etcdRegister := discovery.NewRegister(etcdAddress, logrus.New())
-	grpcAddress := viper.GetString("server.grpcAddress")
+	grpcAddress := config.Conf.Services["task"].Addr[0]
 	defer etcdRegister.Stop()
 	taskNode := discovery.Server{
-		Name: viper.GetString("server.domain"),
+		Name: config.Conf.Domain["task"].Name,
 		Addr: grpcAddress,
 	}
 	server := grpc.NewServer()
 	defer server.Stop()
 	// 绑定service
-	service.RegisterTaskServiceServer(server, handler.NewTaskService())
+	taskPb.RegisterTaskServiceServer(server, handler.GetTaskSrv())
 	lis, err := net.Listen("tcp", grpcAddress)
 	if err != nil {
 		panic(err)

@@ -10,19 +10,19 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/resolver"
 
-	"api-gateway/discovery"
-	"api-gateway/internal/service"
-	"api-gateway/middleware/wrapper"
-	"api-gateway/pkg/util"
-	"api-gateway/routes"
+	"github.com/CocaineCong/grpc-todolist/app/gateway/routes"
+	"github.com/CocaineCong/grpc-todolist/config"
+	taskPb "github.com/CocaineCong/grpc-todolist/idl/task/pb"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
+	"github.com/CocaineCong/grpc-todolist/pkg/util/shutdown"
 )
 
 func main() {
-	InitConfig()
+	config.InitConfig()
 	go startListen() // 转载路由
 	{
 		osSignals := make(chan os.Signal, 1)
@@ -35,51 +35,46 @@ func main() {
 
 func startListen() {
 	// etcd注册
-	etcdAddress := []string{viper.GetString("etcd.address")}
+	etcdAddress := []string{config.Conf.Etcd.Address}
 	etcdRegister := discovery.NewResolver(etcdAddress, logrus.New())
 	resolver.Register(etcdRegister)
 	ctx, _ := context.WithTimeout(context.Background(), 3*time.Second)
 	// 服务名
-	userServiceName := viper.GetString("domain.user")
-	taskServiceName := viper.GetString("domain.task")
+	userServiceName := config.Conf.Domain["user"].Name
+	taskServiceName := config.Conf.Domain["task"].Name
 
 	// RPC 连接
 	connUser, err := RPCConnect(ctx, userServiceName, etcdRegister)
 	if err != nil {
 		return
 	}
-	userService := service.NewUserServiceClient(connUser)
+	userService := userPb.NewUserServiceClient(connUser)
 
 	connTask, err := RPCConnect(ctx, taskServiceName, etcdRegister)
 	if err != nil {
 		return
 	}
-	taskService := service.NewTaskServiceClient(connTask)
+	taskService := taskPb.NewTaskServiceClient(connTask)
 
 	// 加入熔断 TODO main太臃肿了
-	wrapper.NewServiceWrapper(userServiceName)
-	wrapper.NewServiceWrapper(taskServiceName)
+	// wrapper.NewServiceWrapper(userServiceName)
+	// wrapper.NewServiceWrapper(taskServiceName)
 
 	ginRouter := routes.NewRouter(userService, taskService)
 	server := &http.Server{
-		Addr:           viper.GetString("server.port"),
+		Addr:           config.Conf.Server.Port,
 		Handler:        ginRouter,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-	err = server.ListenAndServe()
-	if err != nil {
-		fmt.Println("绑定HTTP到 %s 失败！可能是端口已经被占用，或用户权限不足")
-		fmt.Println(err)
-	}
-	go func() {
-		// 优雅关闭
-		util.GracefullyShutdown(server)
-	}()
 	if err := server.ListenAndServe(); err != nil {
 		fmt.Println("gateway启动失败, err: ", err)
 	}
+	go func() {
+		// 优雅关闭
+		shutdown.GracefullyShutdown(server)
+	}()
 }
 
 func RPCConnect(ctx context.Context, serviceName string, etcdRegister *discovery.Resolver) (conn *grpc.ClientConn, err error) {
@@ -89,15 +84,4 @@ func RPCConnect(ctx context.Context, serviceName string, etcdRegister *discovery
 	addr := fmt.Sprintf("%s:///%s", etcdRegister.Scheme(), serviceName)
 	conn, err = grpc.DialContext(ctx, addr, opts...)
 	return
-}
-
-func InitConfig() {
-	workDir, _ := os.Getwd()
-	viper.SetConfigName("config")
-	viper.SetConfigType("yml")
-	viper.AddConfigPath(workDir + "/config")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
 }

@@ -5,7 +5,6 @@ import (
 	"net"
 
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/handler"
@@ -19,13 +18,13 @@ func main() {
 	config.InitConfig()
 	dao.InitDB()
 	// etcd 地址
-	etcdAddress := []string{viper.GetString("etcd.address")}
+	etcdAddress := []string{config.Conf.Etcd.Address}
 	// 服务注册
 	etcdRegister := discovery.NewRegister(etcdAddress, logrus.New())
-	grpcAddress := viper.GetString("server.grpcAddress")
+	grpcAddress := config.Conf.Services["user"].Addr[0]
 	defer etcdRegister.Stop()
 	userNode := discovery.Server{
-		Name: viper.GetString("server.domain"),
+		Name: config.Conf.Domain["user"].Name,
 		Addr: grpcAddress,
 	}
 	server := grpc.NewServer()

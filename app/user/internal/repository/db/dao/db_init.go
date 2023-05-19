@@ -7,24 +7,25 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
+	"github.com/CocaineCong/grpc-todolist/config"
 	logger2 "github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
 var _db *gorm.DB
 
 func InitDB() {
-	host := viper.GetString("mysql.host")
-	port := viper.GetString("mysql.port")
-	database := viper.GetString("mysql.database")
-	username := viper.GetString("mysql.username")
-	password := viper.GetString("mysql.password")
-	charset := viper.GetString("mysql.charset")
+	mConfig := config.Conf.MySQL
+	host := mConfig.Host
+	port := mConfig.Port
+	database := mConfig.Database
+	username := mConfig.UserName
+	password := mConfig.Password
+	charset := mConfig.Charset
 	dsn := strings.Join([]string{username, ":", password, "@tcp(", host, ":", port, ")/", database, "?charset=" + charset + "&parseTime=true"}, "")
 	err := Database(dsn)
 	if err != nil {
