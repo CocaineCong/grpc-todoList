@@ -11,7 +11,7 @@ import (
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/handler"
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/dao"
 	"github.com/CocaineCong/grpc-todolist/config"
-	"github.com/CocaineCong/grpc-todolist/idl/user"
+	"github.com/CocaineCong/grpc-todolist/idl/user/pb"
 	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
 )
 
@@ -31,7 +31,7 @@ func main() {
 	server := grpc.NewServer()
 	defer server.Stop()
 	// 绑定service
-	user.RegisterUserServiceServer(server, handler.NewUserService())
+	pb.RegisterUserServiceServer(server, handler.GetUserSrv())
 	lis, err := net.Listen("tcp", grpcAddress)
 	if err != nil {
 		panic(err)

@@ -2,15 +2,16 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.12
-// source: idl/user/pb/user.proto
+// source: idl/user/user.proto
 
-package user
+package pb
 
 import (
-	context "context"
-	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
+	"context"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,8 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	UserLogin(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserDetailResponse, error)
-	UserRegister(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserDetailResponse, error)
-	UserLogout(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserDetailResponse, error)
+	UserRegister(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	UserLogout(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 }
 
 type userServiceClient struct {
@@ -44,8 +45,8 @@ func (c *userServiceClient) UserLogin(ctx context.Context, in *UserRequest, opts
 	return out, nil
 }
 
-func (c *userServiceClient) UserRegister(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserDetailResponse, error) {
-	out := new(UserDetailResponse)
+func (c *userServiceClient) UserRegister(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+	out := new(CommonResponse)
 	err := c.cc.Invoke(ctx, "/UserService/UserRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -53,8 +54,8 @@ func (c *userServiceClient) UserRegister(ctx context.Context, in *UserRequest, o
 	return out, nil
 }
 
-func (c *userServiceClient) UserLogout(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserDetailResponse, error) {
-	out := new(UserDetailResponse)
+func (c *userServiceClient) UserLogout(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+	out := new(CommonResponse)
 	err := c.cc.Invoke(ctx, "/UserService/UserLogout", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,8 +68,8 @@ func (c *userServiceClient) UserLogout(ctx context.Context, in *UserRequest, opt
 // for forward compatibility
 type UserServiceServer interface {
 	UserLogin(context.Context, *UserRequest) (*UserDetailResponse, error)
-	UserRegister(context.Context, *UserRequest) (*UserDetailResponse, error)
-	UserLogout(context.Context, *UserRequest) (*UserDetailResponse, error)
+	UserRegister(context.Context, *UserRequest) (*CommonResponse, error)
+	UserLogout(context.Context, *UserRequest) (*CommonResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -79,10 +80,10 @@ type UnimplementedUserServiceServer struct {
 func (UnimplementedUserServiceServer) UserLogin(context.Context, *UserRequest) (*UserDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLogin not implemented")
 }
-func (UnimplementedUserServiceServer) UserRegister(context.Context, *UserRequest) (*UserDetailResponse, error) {
+func (UnimplementedUserServiceServer) UserRegister(context.Context, *UserRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserRegister not implemented")
 }
-func (UnimplementedUserServiceServer) UserLogout(context.Context, *UserRequest) (*UserDetailResponse, error) {
+func (UnimplementedUserServiceServer) UserLogout(context.Context, *UserRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLogout not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
@@ -173,5 +174,5 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "idl/user/pb/user.proto",
+	Metadata: "idl/user/user.proto",
 }

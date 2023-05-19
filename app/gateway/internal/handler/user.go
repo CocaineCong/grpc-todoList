@@ -9,7 +9,7 @@ import (
 	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
-	"github.com/CocaineCong/grpc-todolist/pkg/util"
+	"github.com/CocaineCong/grpc-todolist/pkg/util/jwt"
 )
 
 // 用户注册
@@ -36,7 +36,7 @@ func UserLogin(ginCtx *gin.Context) {
 	userService := ginCtx.Keys["user"].(userPb.UserServiceClient)
 	userResp, err := userService.UserLogin(context.Background(), &userReq)
 	PanicIfUserError(err)
-	token, err := util.GenerateToken(uint(userResp.UserDetail.UserID))
+	token, err := jwt.GenerateToken(uint(userResp.UserDetail.UserID))
 	r := res.Response{
 		Data:   res.TokenData{User: userResp.UserDetail, Token: token},
 		Status: uint(userResp.Code),

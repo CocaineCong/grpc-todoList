@@ -12,13 +12,28 @@ message UserRequest{
   string PasswordConfirm=4;
 }
 
+message UserResponse{
+  // @inject_tag: json:"user_id" form:"user_id" uri:"user_id"
+  int64 UserId=1;
+  // @inject_tag: json:"nick_name" form:"nick_name" uri:"nick_name"
+  string NickName=2;
+  // @inject_tag: json:"user_name" form:"user_name" uri:"user_name"
+  string UserName=3;
+}
+
 message UserDetailResponse{
-  UserRequest UserDetail=1;
+  UserResponse UserDetail=1;
   int64 Code=2;
+}
+
+message CommonResponse{
+  int64 Code=1;
+  string Msg=2;
+  string Data=3;
 }
 
 service UserService{
   rpc UserLogin(UserRequest) returns(UserDetailResponse);
-  rpc UserRegister(UserRequest) returns(UserDetailResponse);
-  rpc UserLogout(UserRequest) returns(UserDetailResponse);
+  rpc UserRegister(UserRequest) returns(CommonResponse);
+  rpc UserLogout(UserRequest) returns(CommonResponse);
 }

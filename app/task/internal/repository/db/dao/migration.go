@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/model"
-	"github.com/CocaineCong/grpc-todolist/pkg/util"
+	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
 func migration() {
@@ -14,8 +14,8 @@ func migration() {
 			&model.Task{},
 		)
 	if err != nil {
-		util.LogrusObj.Infoln("register table fail")
+		logger.LogrusObj.Infoln("register table fail")
 		os.Exit(0)
 	}
-	util.LogrusObj.Infoln("register table success")
+	logger.LogrusObj.Infoln("register table success")
 }

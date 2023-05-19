@@ -13,7 +13,7 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
-	"github.com/CocaineCong/grpc-todolist/pkg/util"
+	logger2 "github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
 var _db *gorm.DB
@@ -29,7 +29,7 @@ func InitDB() {
 	err := Database(dsn)
 	if err != nil {
 		fmt.Println(err)
-		util.LogrusObj.Error(err)
+		logger2.LogrusObj.Error(err)
 	}
 }
 

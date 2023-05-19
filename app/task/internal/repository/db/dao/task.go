@@ -7,7 +7,7 @@ import (
 
 	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/model"
 	"github.com/CocaineCong/grpc-todolist/idl/task"
-	"github.com/CocaineCong/grpc-todolist/pkg/util"
+	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
 type TaskDao struct {
@@ -36,7 +36,7 @@ func (dao *TaskDao) CreateTask(req *task.TaskRequest) (err error) {
 		EndTime:   int64(req.EndTime),
 	}
 	if err = dao.Model(&model.Task{}).Create(&t).Error; err != nil {
-		util.LogrusObj.Error("Insert Task Error:" + err.Error())
+		logger.LogrusObj.Error("Insert Task Error:" + err.Error())
 		return
 	}
 	return

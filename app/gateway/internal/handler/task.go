@@ -9,13 +9,13 @@ import (
 	"github.com/CocaineCong/grpc-todolist/idl/task/pb"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
-	"github.com/CocaineCong/grpc-todolist/pkg/util"
+	"github.com/CocaineCong/grpc-todolist/pkg/util/jwt"
 )
 
 func GetTaskList(ginCtx *gin.Context) {
 	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
+	claim, _ := jwt.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
 	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskShow(context.Background(), &tReq)
@@ -31,7 +31,7 @@ func GetTaskList(ginCtx *gin.Context) {
 func CreateTask(ginCtx *gin.Context) {
 	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
+	claim, _ := jwt.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
 	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskCreate(context.Background(), &tReq)
@@ -47,7 +47,7 @@ func CreateTask(ginCtx *gin.Context) {
 func UpdateTask(ginCtx *gin.Context) {
 	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
+	claim, _ := jwt.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
 	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskUpdate(context.Background(), &tReq)
@@ -63,7 +63,7 @@ func UpdateTask(ginCtx *gin.Context) {
 func DeleteTask(ginCtx *gin.Context) {
 	var tReq pb.TaskRequest
 	PanicIfTaskError(ginCtx.Bind(&tReq))
-	claim, _ := util.ParseToken(ginCtx.GetHeader("Authorization"))
+	claim, _ := jwt.ParseToken(ginCtx.GetHeader("Authorization"))
 	tReq.UserID = uint32(claim.UserID)
 	TaskService := ginCtx.Keys["task"].(pb.TaskServiceClient)
 	TaskResp, err := TaskService.TaskDelete(context.Background(), &tReq)

@@ -7,8 +7,8 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/model"
-	userPb "github.com/CocaineCong/grpc-todolist/idl/user"
-	"github.com/CocaineCong/grpc-todolist/pkg/util"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
 type UserDao struct {
@@ -42,7 +42,7 @@ func (dao *UserDao) CreateUser(req *userPb.UserRequest) (err error) {
 	}
 	_ = user.SetPassword(req.Password)
 	if err = dao.Model(&model.User{}).Create(&user).Error; err != nil {
-		util.LogrusObj.Error("Insert User Error:" + err.Error())
+		logger.LogrusObj.Error("Insert User Error:" + err.Error())
 		return
 	}
 

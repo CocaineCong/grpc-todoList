@@ -1,4 +1,4 @@
-package util
+package shutdown
 
 import (
 	"context"
@@ -6,6 +6,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
 func GracefullyShutdown(server *http.Server) {
@@ -18,9 +20,9 @@ func GracefullyShutdown(server *http.Server) {
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	<-done
 
-	LogrusObj.Println("closing http server gracefully ...")
+	logger.LogrusObj.Println("closing http server gracefully ...")
 
 	if err := server.Shutdown(context.Background()); err != nil {
-		LogrusObj.Fatalln("closing http server gracefully failed: ", err)
+		logger.LogrusObj.Fatalln("closing http server gracefully failed: ", err)
 	}
 }
