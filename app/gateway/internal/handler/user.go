@@ -12,12 +12,12 @@ import (
 	"github.com/CocaineCong/grpc-todolist/pkg/util/jwt"
 )
 
-// 用户注册
-func UserRegister(ginCtx *gin.Context) {
+// UserRegister 用户注册
+func UserRegister(ctx *gin.Context) {
 	var userReq userPb.UserRequest
-	PanicIfUserError(ginCtx.Bind(&userReq))
+	PanicIfUserError(ctx.Bind(&userReq))
 	// 从gin.Key中取出服务实例
-	userService := ginCtx.Keys["user"].(userPb.UserServiceClient)
+	userService := ctx.Keys["user"].(userPb.UserServiceClient)
 	userResp, err := userService.UserRegister(context.Background(), &userReq)
 	PanicIfUserError(err)
 	r := res.Response{
@@ -25,22 +25,22 @@ func UserRegister(ginCtx *gin.Context) {
 		Status: uint(userResp.Code),
 		Msg:    e.GetMsg(uint(userResp.Code)),
 	}
-	ginCtx.JSON(http.StatusOK, r)
+	ctx.JSON(http.StatusOK, r)
 }
 
-// 用户登录
-func UserLogin(ginCtx *gin.Context) {
+// UserLogin 用户登录
+func UserLogin(ctx *gin.Context) {
 	var userReq userPb.UserRequest
-	PanicIfUserError(ginCtx.Bind(&userReq))
+	PanicIfUserError(ctx.Bind(&userReq))
 	// 从gin.Key中取出服务实例
-	userService := ginCtx.Keys["user"].(userPb.UserServiceClient)
+	userService := ctx.Keys["user"].(userPb.UserServiceClient)
 	userResp, err := userService.UserLogin(context.Background(), &userReq)
 	PanicIfUserError(err)
-	token, err := jwt.GenerateToken(uint(userResp.UserDetail.UserID))
+	token, err := jwt.GenerateToken(userResp.UserDetail.UserId)
 	r := res.Response{
 		Data:   res.TokenData{User: userResp.UserDetail, Token: token},
 		Status: uint(userResp.Code),
 		Msg:    e.GetMsg(uint(userResp.Code)),
 	}
-	ginCtx.JSON(http.StatusOK, r)
+	ctx.JSON(http.StatusOK, r)
 }

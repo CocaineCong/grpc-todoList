@@ -54,36 +54,30 @@ func (*TaskSrv) TaskShow(ctx context.Context, req *taskPb.TaskRequest) (resp *ta
 			EndTime:   r[i].EndTime,
 		})
 	}
-	resp.TaskDetail = repository.BuildTasks(tRep)
 	return
 }
 
-func (*TaskService) TaskUpdate(ctx context.Context, req *service.TaskRequest) (resp *service.CommonResponse, err error) {
-	var task repository.Task
-	resp = new(service.CommonResponse)
-	resp.Code = e.SUCCESS
-	err = task.Update(req)
+func (*TaskSrv) TaskUpdate(ctx context.Context, req *taskPb.TaskRequest) (resp *taskPb.CommonResponse, err error) {
+	err = dao.NewTaskDao(ctx).UpdateTask(req)
 	if err != nil {
 		resp.Code = e.ERROR
 		resp.Msg = e.GetMsg(e.ERROR)
 		resp.Data = err.Error()
-		return resp, err
+		return
 	}
 	resp.Msg = e.GetMsg(uint(resp.Code))
-	return resp, nil
+	return
 }
 
-func (*TaskService) TaskDelete(ctx context.Context, req *service.TaskRequest) (resp *service.CommonResponse, err error) {
-	var task repository.Task
-	resp = new(service.CommonResponse)
+func (*TaskSrv) TaskDelete(ctx context.Context, req *taskPb.TaskRequest) (resp *taskPb.CommonResponse, err error) {
 	resp.Code = e.SUCCESS
-	err = task.Delete(req)
+	err = dao.NewTaskDao(ctx).DeleteTaskById(req.TaskID, req.UserID)
 	if err != nil {
 		resp.Code = e.ERROR
 		resp.Msg = e.GetMsg(e.ERROR)
 		resp.Data = err.Error()
-		return resp, err
+		return
 	}
 	resp.Msg = e.GetMsg(uint(resp.Code))
-	return resp, nil
+	return
 }

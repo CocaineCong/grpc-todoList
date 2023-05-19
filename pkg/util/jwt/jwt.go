@@ -10,12 +10,12 @@ import (
 var jwtSecret = []byte(viper.GetString("server.jwtSecret"))
 
 type Claims struct {
-	UserID uint `json:"user_id"`
+	UserID int64 `json:"user_id"`
 	jwt.StandardClaims
 }
 
 // GenerateToken 签发用户Token
-func GenerateToken(userID uint) (string, error) {
+func GenerateToken(userID int64) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(24 * time.Hour)
 	claims := Claims{
