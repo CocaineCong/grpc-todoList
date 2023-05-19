@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/model"
-	"github.com/CocaineCong/grpc-todolist/idl/task"
+	taskPb "github.com/CocaineCong/grpc-todolist/idl/task/pb"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 
@@ -26,19 +26,20 @@ func (dao *TaskDao) ListTaskByUserId(userId int64) (r []*model.Task, err error) 
 	return
 }
 
-func (dao *TaskDao) CreateTask(req *task.TaskRequest) (err error) {
+func (dao *TaskDao) CreateTask(req *taskPb.TaskRequest) (err error) {
 	t := &model.Task{
-		UserID:    uint(req.UserID),
+		UserID:    req.UserID,
 		Title:     req.Title,
 		Content:   req.Content,
 		Status:    int(req.Status),
-		StartTime: int64(req.StartTime),
-		EndTime:   int64(req.EndTime),
+		StartTime: req.StartTime,
+		EndTime:   req.EndTime,
 	}
 	if err = dao.Model(&model.Task{}).Create(&t).Error; err != nil {
 		logger.LogrusObj.Error("Insert Task Error:" + err.Error())
 		return
 	}
+
 	return
 }
 
@@ -50,7 +51,7 @@ func (dao *TaskDao) DeleteTaskById(taskId, userId int64) (err error) {
 	return
 }
 
-func (dao *TaskDao) UpdateTask(req *task.TaskRequest) (err error) {
+func (dao *TaskDao) UpdateTask(req *taskPb.TaskRequest) (err error) {
 	t := model.Task{}
 	err = dao.Model(&model.Task{}).
 		Where("task_id=?", req.TaskID).First(&t).Error
@@ -60,8 +61,8 @@ func (dao *TaskDao) UpdateTask(req *task.TaskRequest) (err error) {
 	t.Title = req.Title
 	t.Content = req.Content
 	t.Status = int(req.Status)
-	t.StartTime = int64(req.StartTime)
-	t.EndTime = int64(req.EndTime)
+	t.StartTime = req.StartTime
+	t.EndTime = req.EndTime
 	err = dao.Save(&t).Error
 
 	return
