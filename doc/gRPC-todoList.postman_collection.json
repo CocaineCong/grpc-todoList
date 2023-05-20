@@ -18,22 +18,22 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "UserName",
-									"value": "FanOne",
+									"key": "user_name",
+									"value": "FanOne1112",
 									"type": "text"
 								},
 								{
-									"key": "NickName",
+									"key": "nick_name",
 									"value": "CocaineCong",
 									"type": "text"
 								},
 								{
-									"key": "Password",
+									"key": "password",
 									"value": "12345678",
 									"type": "text"
 								},
 								{
-									"key": "PasswordConfirm",
+									"key": "password_confirm",
 									"value": "12345678",
 									"type": "text"
 								}
@@ -60,22 +60,22 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "UserName",
-											"value": "FanOne",
+											"key": "user_name",
+											"value": "FanOne1112",
 											"type": "text"
 										},
 										{
-											"key": "NickName",
+											"key": "nick_name",
 											"value": "CocaineCong",
 											"type": "text"
 										},
 										{
-											"key": "Password",
+											"key": "password",
 											"value": "12345678",
 											"type": "text"
 										},
 										{
-											"key": "PasswordConfirm",
+											"key": "password_confirm",
 											"value": "12345678",
 											"type": "text"
 										}
@@ -102,15 +102,15 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jun 2022 15:54:00 GMT"
+									"value": "Sat, 20 May 2023 04:59:39 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "72"
+									"value": "77"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"UserDetail\": {},\n        \"Code\": 200\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"\",\n        \"data\": \"ok\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
 						}
 					]
 				},
@@ -123,12 +123,12 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "UserName",
+									"key": "user_name",
 									"value": "FanOne",
 									"type": "text"
 								},
 								{
-									"key": "Password",
+									"key": "password",
 									"value": "12345678",
 									"type": "text"
 								}
@@ -155,12 +155,12 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "UserName",
+											"key": "user_name",
 											"value": "FanOne",
 											"type": "text"
 										},
 										{
-											"key": "Password",
+											"key": "password",
 											"value": "12345678",
 											"type": "text"
 										}
@@ -187,15 +187,15 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jun 2022 15:55:25 GMT"
+									"value": "Sat, 20 May 2023 05:00:13 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "278"
+									"value": "276"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"User\": {\n            \"UserID\": 1,\n            \"UserName\": \"FanOne\",\n            \"NickName\": \"CocaineCong\"\n        },\n        \"Token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2NTUwNDkzMjUsImlzcyI6IjM4Mzg0LVNlYXJjaEVuZ2luZSJ9.uvJ4-wbCo3jJgJ5stSK8cb4J5lKEV2ft1ucCJ5v8r58\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"user\": {\n            \"user_id\": 1,\n            \"nick_name\": \"FanOne\",\n            \"user_name\": \"FanOne\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2ODQ2NDUyMTMsImlzcyI6IjM4Mzg0LVNlYXJjaEVuZ2luZSJ9.btiZId5AjNVpDZ47liZxCjlBrLDuAxmYNAxZNFoc0kI\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
 						}
 					]
 				}
@@ -219,27 +219,27 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "Title",
-									"value": "一键三连",
+									"key": "title",
+									"value": "一键三连加关注！！！",
 									"type": "text"
 								},
 								{
-									"key": "Content",
-									"value": "我太喜欢一键三连啦！",
+									"key": "content",
+									"value": "我可太喜欢up了！！！！",
 									"type": "text"
 								},
 								{
-									"key": "Status",
+									"key": "status",
 									"value": "0",
 									"type": "text"
 								},
 								{
-									"key": "StartTime",
+									"key": "start_time",
 									"value": "0",
 									"type": "text"
 								},
 								{
-									"key": "EndTime",
+									"key": "end_time",
 									"value": "0",
 									"type": "text"
 								}
@@ -271,27 +271,27 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "Title",
-											"value": "一键三连",
+											"key": "title",
+											"value": "一键三连加关注！！！",
 											"type": "text"
 										},
 										{
-											"key": "Content",
-											"value": "我太喜欢一键三连啦！",
+											"key": "content",
+											"value": "我可太喜欢up了！！！！",
 											"type": "text"
 										},
 										{
-											"key": "Status",
+											"key": "status",
 											"value": "0",
 											"type": "text"
 										},
 										{
-											"key": "StartTime",
+											"key": "start_time",
 											"value": "0",
 											"type": "text"
 										},
 										{
-											"key": "EndTime",
+											"key": "end_time",
 											"value": "0",
 											"type": "text"
 										}
@@ -317,15 +317,15 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jun 2022 16:03:42 GMT"
+									"value": "Sat, 20 May 2023 05:30:38 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "67"
+									"value": "77"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"Code\": 200,\n        \"Msg\": \"ok\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\",\n        \"data\": \"\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
 						}
 					]
 				},
@@ -382,15 +382,15 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jun 2022 16:08:28 GMT"
+									"value": "Sat, 20 May 2023 05:31:14 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "161"
+									"value": "222"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"TaskDetail\": [\n            {\n                \"TaskID\": 4,\n                \"UserID\": 1,\n                \"Title\": \"一键三连\",\n                \"Content\": \"我太喜欢一键三连啦！\"\n            }\n        ],\n        \"Code\": 200\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"task_model\": [\n            {\n                \"task_id\": 1,\n                \"user_id\": 1,\n                \"status\": 0,\n                \"title\": \"一键三连加关注！！！\",\n                \"content\": \"我可太喜欢up了！！！！\",\n                \"start_time\": 0,\n                \"end_time\": 0\n            }\n        ],\n        \"code\": 200\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
 						}
 					]
 				},
@@ -409,32 +409,32 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "TaskID",
+									"key": "task_id",
 									"value": "1",
 									"type": "text"
 								},
 								{
-									"key": "Title",
+									"key": "title",
 									"value": "我太喜欢点赞了！",
 									"type": "text"
 								},
 								{
-									"key": "Content",
-									"value": "拒绝白嫖，从我做起",
+									"key": "content",
+									"value": "拒绝白嫖，从我做起111",
 									"type": "text"
 								},
 								{
-									"key": "Status",
+									"key": "status",
 									"value": "1",
 									"type": "text"
 								},
 								{
-									"key": "StartTime",
+									"key": "start_time",
 									"value": "1",
 									"type": "text"
 								},
 								{
-									"key": "EndTime",
+									"key": "end_time",
 									"value": "1",
 									"type": "text"
 								}
@@ -466,32 +466,32 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "TaskID",
+											"key": "task_id",
 											"value": "1",
 											"type": "text"
 										},
 										{
-											"key": "Title",
+											"key": "title",
 											"value": "我太喜欢点赞了！",
 											"type": "text"
 										},
 										{
-											"key": "Content",
-											"value": "拒绝白嫖，从我做起",
+											"key": "content",
+											"value": "拒绝白嫖，从我做起111",
 											"type": "text"
 										},
 										{
-											"key": "Status",
+											"key": "status",
 											"value": "1",
 											"type": "text"
 										},
 										{
-											"key": "StartTime",
+											"key": "start_time",
 											"value": "1",
 											"type": "text"
 										},
 										{
-											"key": "EndTime",
+											"key": "end_time",
 											"value": "1",
 											"type": "text"
 										}
@@ -517,15 +517,15 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jun 2022 16:10:24 GMT"
+									"value": "Sat, 20 May 2023 05:40:35 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "67"
+									"value": "77"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"Code\": 200,\n        \"Msg\": \"ok\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\",\n        \"data\": \"\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
 						}
 					]
 				},
@@ -533,7 +533,23 @@
 					"name": "删除备忘录",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "task_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "{{url}}/task",
 							"host": [
@@ -560,7 +576,7 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "TaskID",
+											"key": "task_id",
 											"value": "2",
 											"type": "text"
 										}
@@ -586,15 +602,15 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 11 Jun 2022 16:12:43 GMT"
+									"value": "Sat, 20 May 2023 07:01:26 GMT"
 								},
 								{
 									"key": "Content-Length",
-									"value": "67"
+									"value": "77"
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"Status\": 200,\n    \"Data\": {\n        \"Code\": 200,\n        \"Msg\": \"ok\"\n    },\n    \"Msg\": \"ok\",\n    \"Error\": \"\"\n}"
+							"body": "{\n    \"status\": 200,\n    \"data\": {\n        \"code\": 200,\n        \"msg\": \"ok\",\n        \"data\": \"\"\n    },\n    \"msg\": \"ok\",\n    \"error\": \"\"\n}"
 						}
 					]
 				}
