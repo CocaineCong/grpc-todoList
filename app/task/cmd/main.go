@@ -7,8 +7,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 
-	"github.com/CocaineCong/grpc-todolist/app/task/internal/handler"
 	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/dao"
+	"github.com/CocaineCong/grpc-todolist/app/task/internal/service"
 	"github.com/CocaineCong/grpc-todolist/config"
 	taskPb "github.com/CocaineCong/grpc-todolist/idl/pb/task"
 	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
@@ -30,7 +30,7 @@ func main() {
 	server := grpc.NewServer()
 	defer server.Stop()
 	// 绑定service
-	taskPb.RegisterTaskServiceServer(server, handler.GetTaskSrv())
+	taskPb.RegisterTaskServiceServer(server, service.GetTaskSrv())
 	lis, err := net.Listen("tcp", grpcAddress)
 	if err != nil {
 		panic(err)

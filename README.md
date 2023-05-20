@@ -49,7 +49,8 @@ gateway/
 │       └── pb            // 放置生成的pb文件
 ├── logs                  // 放置打印日志模块
 ├── middleware            // 中间件
-└── routes                // http路由模块
+├── routes                // http 路由模块
+└── rpc                   // rpc 调用
 ```
 
 ## 3.user && task 用户与任务模块
@@ -57,52 +58,102 @@ gateway/
 user/
 ├── cmd                   // 启动入口
 └──internal               // 业务逻辑（不对外暴露）
-   ├── handler            // 视图层
+   ├── service            // 业务服务
    └── repository         // 持久层 
       └── db              // 视图层
         └── pb            // 放置生成的pb文件
 ```
 
 # 项目完善
-现在已经新建了t0分支，欢迎大家将自己的想法pr到t0分支，测试无误之后，我们将合并到main分支。
+🎈最新版本是 v2 ，欢迎大家将自己的想法pr到版本对应分支，CR通过后，我们将合并到main分支。
 
 - 添加熔断机制
 - ....其他想法
 
 # 项目文件配置
 
-各模块下的`config/config.yml`文件
+`config/config.yml`文件，直接将 `config.yml.example-->config.yml` 就可以了
 
 
 ```yaml
-server:
-# 模块
-  domain: user
-  # 模块名称
-  version: 1.0
-  # 模块版本
-  grpcAddress: "127.0.0.1:10001"
-  # grpc地址
+server: # 项目配置
+  port: :4000 # 项目端口
+  version: 1.0 
+  jwtSecret: 38324
 
-datasource:
-# mysql数据源
-  driverName: mysqlMaster
+mysql: # mysql相关配置
+  driverName: mysql
   host: 127.0.0.1
   port: 3306
-  database: basicInfo
-  # 数据库名
-  username: root
-  password: root
+  database: grpc_todolist
+  username: grpc_todolist
+  password: grpc_todolist
   charset: utf8mb4
 
-etcd:
-# etcd 配置
-  address: 127.0.0.1:2379
-
-redis:
-# redis 配置
+redis: # redis相关配置，其实没有用到redis...
+  user_name: default
   address: 127.0.0.1:6379
   password:
+
+etcd: # etcd相关配置
+  address: 127.0.0.1:2379
+
+services: # 各个微服务的配置
+  gateway:
+    name: gateway
+    loadBalance: true
+    addr:
+      - 127.0.0.1:10001
+  user:
+    name: user
+    loadBalance: false
+    addr:
+      - 127.0.0.1:10002 # user模块地址
+  task:
+    name: task
+    loadBalance: false
+    addr:
+      - 127.0.0.1:10003 # task模块地址
+
+domain:
+  user:
+    name: user
+  task:
+    name: task
+```
+
+# 项目启动
+## makefile启动
+
+启动命令
+
+```shell
+make env-up         # 启动容器环境
+make user           # 启动用户摸块
+make task           # 启动任务模块
+make gateway        # 启动网关
+make env-down       # 关闭并删除容器环境
+```
+
+其他命令
+```shell
+make proto # 生成proto文件，如果proto有改变的话，则需要重新生成文件
+```
+生成.pb文件所需要的工具有`protoc-gen-go`,`protoc-gen-go-grpc`,`protoc-go-inject-tag`
+
+
+## 手动启动
+
+1. 利用compose快速构建环境
+
+```shell
+docker-compose up -d
+```
+
+2. 保证mysql,etcd活跃, 在 app 文件夹下的各个模块的 cmd 下执行
+
+```go
+go run main.go
 ```
 
 # 导入接口文档
@@ -119,18 +170,3 @@ redis:
 效果
 
 ![postman](doc/4.效果.png)
-
-
-# 项目启动
-保证etcd处于运行状态。
-- 在各模块下进行
-
-```go
-go mod tidy
-```
-
-- 在各模块下的cmd目录
-
-```go
-go run main.go
-```

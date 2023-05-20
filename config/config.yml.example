@@ -7,12 +7,13 @@ mysql:
   driverName: mysql
   host: 127.0.0.1
   port: 3306
-  database: todolist
-  username: todolist
-  password: todolist
+  database: grpc_todolist
+  username: grpc_todolist
+  password: grpc_todolist
   charset: utf8mb4
 
 redis:
+  user_name: default
   address: 127.0.0.1:6379
   password:
 
@@ -22,20 +23,22 @@ etcd:
 services:
   gateway:
     name: gateway
-    load-balance: true
+    loadBalance: true
     addr:
       - 127.0.0.1:10001
   user:
     name: user
-    load-balance: false
+    loadBalance: false
     addr:
       - 127.0.0.1:10002
   task:
     name: task
-    load-balance: false
+    loadBalance: false
     addr:
       - 127.0.0.1:10003
 
 domain:
-  user: user
-  task: task
+  user:
+    name: user
+  task:
+    name: task
