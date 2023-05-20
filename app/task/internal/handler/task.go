@@ -32,7 +32,7 @@ func (*TaskSrv) TaskCreate(ctx context.Context, req *pb.TaskRequest) (resp *pb.T
 		resp.Data = err.Error()
 		return
 	}
-	resp.Msg = e.GetMsg(uint(resp.Code))
+	resp.Msg = e.GetMsg(int(resp.Code))
 	return
 }
 
@@ -68,7 +68,7 @@ func (*TaskSrv) TaskUpdate(ctx context.Context, req *pb.TaskRequest) (resp *pb.T
 		resp.Data = err.Error()
 		return
 	}
-	resp.Msg = e.GetMsg(uint(resp.Code))
+	resp.Msg = e.GetMsg(int(resp.Code))
 	return
 }
 
@@ -82,6 +82,6 @@ func (*TaskSrv) TaskDelete(ctx context.Context, req *pb.TaskRequest) (resp *pb.T
 		resp.Data = err.Error()
 		return
 	}
-	resp.Msg = e.GetMsg(uint(resp.Code))
+	resp.Msg = e.GetMsg(int(resp.Code))
 	return
 }

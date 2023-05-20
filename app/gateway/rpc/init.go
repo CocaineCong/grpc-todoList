@@ -24,9 +24,6 @@ var (
 
 	UserClient user.UserServiceClient
 	TaskClient task.TaskServiceClient
-
-	userSrvName = config.Conf.Domain["user"].Name
-	taskSrvName = config.Conf.Domain["task"].Name
 )
 
 func Init() {
@@ -35,9 +32,8 @@ func Init() {
 	ctx, CancelFunc = context.WithTimeout(context.Background(), 3*time.Second)
 
 	defer Register.Close()
-
-	initClient(userSrvName, &UserClient)
-	initClient(taskSrvName, &TaskClient)
+	initClient(config.Conf.Domain["user"].Name, &UserClient)
+	initClient(config.Conf.Domain["task"].Name, &TaskClient)
 }
 
 func initClient(serviceName string, client interface{}) {

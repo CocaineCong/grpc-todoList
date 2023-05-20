@@ -47,7 +47,7 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *pb.UserRequest) (resp *
 		resp.Code = e.ERROR
 		return
 	}
-	resp.Data = e.GetMsg(uint(resp.Code))
+	resp.Data = e.GetMsg(int(resp.Code))
 	return
 }
 

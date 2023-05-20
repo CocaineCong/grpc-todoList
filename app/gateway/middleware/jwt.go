@@ -21,7 +21,7 @@ func JWT() gin.HandlerFunc {
 			code = 404
 			c.JSON(200, gin.H{
 				"status": code,
-				"msg":    e.GetMsg(uint(code)),
+				"msg":    e.GetMsg(code),
 				"data":   data,
 			})
 			c.Abort()
@@ -35,7 +35,7 @@ func JWT() gin.HandlerFunc {
 		if code != e.SUCCESS {
 			c.JSON(200, gin.H{
 				"status": code,
-				"msg":    e.GetMsg(uint(code)),
+				"msg":    e.GetMsg(code),
 				"data":   data,
 			})
 			c.Abort()
