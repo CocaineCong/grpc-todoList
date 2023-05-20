@@ -1,6 +1,6 @@
 package e
 
-var MsgFlags = map[uint]string{
+var MsgFlags = map[int]string{
 	SUCCESS: "ok",
 	ERROR:   "fail",
 
@@ -20,7 +20,7 @@ var MsgFlags = map[uint]string{
 }
 
 // GetMsg 获取状态码对应信息
-func GetMsg(code uint) string {
+func GetMsg(code int) string {
 	msg, ok := MsgFlags[code]
 	if ok {
 		return msg

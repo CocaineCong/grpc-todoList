@@ -1,13 +1,13 @@
 package handler
 
 import (
-	"context"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/CocaineCong/grpc-todolist/app/gateway/rpc"
 	pb "github.com/CocaineCong/grpc-todolist/idl/pb/user"
-	"github.com/CocaineCong/grpc-todolist/pkg/e"
+	"github.com/CocaineCong/grpc-todolist/pkg/ctl"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/jwt"
 )
@@ -15,33 +15,38 @@ import (
 // UserRegister 用户注册
 func UserRegister(ctx *gin.Context) {
 	var userReq pb.UserRequest
-	PanicIfUserError(ctx.Bind(&userReq))
-	// 从gin.Key中取出服务实例
-	userService := ctx.Keys["user"].(pb.UserServiceClient)
-	userResp, err := userService.UserRegister(context.Background(), &userReq)
-	PanicIfUserError(err)
-	r := res.Response{
-		Data:   userResp,
-		Status: int(userResp.Code),
-		Msg:    e.GetMsg(uint(userResp.Code)),
+	if err := ctx.Bind(&userReq); err != nil {
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数错误"))
+		return
 	}
-	ctx.JSON(http.StatusOK, r)
+	r, err := rpc.UserRegister(ctx, &userReq)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "UserRegister RPC服务调用错误"))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, r))
 }
 
 // UserLogin 用户登录
 func UserLogin(ctx *gin.Context) {
-	var userReq pb.UserRequest
-	PanicIfUserError(ctx.Bind(&userReq))
-	// 从gin.Key中取出服务实例
-	userService := ctx.Keys["user"].(pb.UserServiceClient)
-	userResp, err := userService.UserLogin(context.Background(), &userReq)
-	PanicIfUserError(err)
-	token, err := jwt.GenerateToken(userResp.UserDetail.UserId)
-	PanicIfUserError(err)
-	r := res.Response{
-		Data:   res.TokenData{User: userResp.UserDetail, Token: token},
-		Status: int(userResp.Code),
-		Msg:    e.GetMsg(uint(userResp.Code)),
+	var req pb.UserRequest
+	if err := ctx.Bind(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数错误"))
+		return
 	}
-	ctx.JSON(http.StatusOK, r)
+
+	userResp, err := rpc.UserLogin(ctx, &req)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "UserLogin RPC服务调用错误"))
+		return
+	}
+
+	token, err := jwt.GenerateToken(userResp.UserId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "加密错误"))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, ctl.RespSuccess(ctx, res.TokenData{User: userResp, Token: token}))
 }
