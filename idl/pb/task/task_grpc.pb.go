@@ -2,16 +2,15 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.12
-// source: idl/task/task.proto
+// source: task.proto
 
-package pb
+package task
 
 import (
-	"context"
-
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	context "context"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -23,10 +22,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TaskServiceClient interface {
-	TaskCreate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error)
-	TaskUpdate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	TaskCreate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TaskCommonResponse, error)
+	TaskUpdate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TaskCommonResponse, error)
 	TaskShow(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TasksDetailResponse, error)
-	TaskDelete(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	TaskDelete(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TaskCommonResponse, error)
 }
 
 type taskServiceClient struct {
@@ -37,8 +36,8 @@ func NewTaskServiceClient(cc grpc.ClientConnInterface) TaskServiceClient {
 	return &taskServiceClient{cc}
 }
 
-func (c *taskServiceClient) TaskCreate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
+func (c *taskServiceClient) TaskCreate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TaskCommonResponse, error) {
+	out := new(TaskCommonResponse)
 	err := c.cc.Invoke(ctx, "/TaskService/TaskCreate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,8 +45,8 @@ func (c *taskServiceClient) TaskCreate(ctx context.Context, in *TaskRequest, opt
 	return out, nil
 }
 
-func (c *taskServiceClient) TaskUpdate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
+func (c *taskServiceClient) TaskUpdate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TaskCommonResponse, error) {
+	out := new(TaskCommonResponse)
 	err := c.cc.Invoke(ctx, "/TaskService/TaskUpdate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -64,8 +63,8 @@ func (c *taskServiceClient) TaskShow(ctx context.Context, in *TaskRequest, opts 
 	return out, nil
 }
 
-func (c *taskServiceClient) TaskDelete(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
-	out := new(CommonResponse)
+func (c *taskServiceClient) TaskDelete(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TaskCommonResponse, error) {
+	out := new(TaskCommonResponse)
 	err := c.cc.Invoke(ctx, "/TaskService/TaskDelete", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -77,10 +76,10 @@ func (c *taskServiceClient) TaskDelete(ctx context.Context, in *TaskRequest, opt
 // All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility
 type TaskServiceServer interface {
-	TaskCreate(context.Context, *TaskRequest) (*CommonResponse, error)
-	TaskUpdate(context.Context, *TaskRequest) (*CommonResponse, error)
+	TaskCreate(context.Context, *TaskRequest) (*TaskCommonResponse, error)
+	TaskUpdate(context.Context, *TaskRequest) (*TaskCommonResponse, error)
 	TaskShow(context.Context, *TaskRequest) (*TasksDetailResponse, error)
-	TaskDelete(context.Context, *TaskRequest) (*CommonResponse, error)
+	TaskDelete(context.Context, *TaskRequest) (*TaskCommonResponse, error)
 	mustEmbedUnimplementedTaskServiceServer()
 }
 
@@ -88,16 +87,16 @@ type TaskServiceServer interface {
 type UnimplementedTaskServiceServer struct {
 }
 
-func (UnimplementedTaskServiceServer) TaskCreate(context.Context, *TaskRequest) (*CommonResponse, error) {
+func (UnimplementedTaskServiceServer) TaskCreate(context.Context, *TaskRequest) (*TaskCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskCreate not implemented")
 }
-func (UnimplementedTaskServiceServer) TaskUpdate(context.Context, *TaskRequest) (*CommonResponse, error) {
+func (UnimplementedTaskServiceServer) TaskUpdate(context.Context, *TaskRequest) (*TaskCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskUpdate not implemented")
 }
 func (UnimplementedTaskServiceServer) TaskShow(context.Context, *TaskRequest) (*TasksDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskShow not implemented")
 }
-func (UnimplementedTaskServiceServer) TaskDelete(context.Context, *TaskRequest) (*CommonResponse, error) {
+func (UnimplementedTaskServiceServer) TaskDelete(context.Context, *TaskRequest) (*TaskCommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaskDelete not implemented")
 }
 func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
@@ -210,5 +209,5 @@ var TaskService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "idl/task/task.proto",
+	Metadata: "task.proto",
 }

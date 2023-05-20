@@ -10,7 +10,7 @@ import (
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/handler"
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/dao"
 	"github.com/CocaineCong/grpc-todolist/config"
-	"github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	pb "github.com/CocaineCong/grpc-todolist/idl/pb/user"
 	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
 )
 

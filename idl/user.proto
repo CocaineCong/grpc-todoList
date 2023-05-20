@@ -28,7 +28,7 @@ message UserDetailResponse{
   int64 Code=2;
 }
 
-message CommonResponse{
+message UserCommonResponse{
   // @inject_tag: json:"code" form:"code"" uri:"code""
   int64 Code=1;
   // @inject_tag: json:"msg" form:"msg"" uri:"msg""
@@ -39,6 +39,6 @@ message CommonResponse{
 
 service UserService{
   rpc UserLogin(UserRequest) returns(UserDetailResponse);
-  rpc UserRegister(UserRequest) returns(CommonResponse);
-  rpc UserLogout(UserRequest) returns(CommonResponse);
+  rpc UserRegister(UserRequest) returns(UserCommonResponse);
+  rpc UserLogout(UserRequest) returns(UserCommonResponse);
 }

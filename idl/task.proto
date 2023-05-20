@@ -23,12 +23,19 @@ message TaskModel {
 }
 
 message TaskRequest{
+    // @inject_tag: json:"task_id"
     int64 TaskID=1;
+    // @inject_tag: json:"user_id"
     int64 UserID=2;
+    // @inject_tag: json:"status"
     int64 Status=3;
+    // @inject_tag: json:"title"
     string Title=4;
+    // @inject_tag: json:"content"
     string Content=5;
+    // @inject_tag: json:"start_time"
     int64 StartTime=6;
+    // @inject_tag: json:"end_time"
     int64 EndTime=7;
 }
 
@@ -39,7 +46,7 @@ message TasksDetailResponse{
     int64 Code=2;
 }
 
-message CommonResponse{
+message TaskCommonResponse{
     // @inject_tag: json:"code"
     int64 Code=1;
     // @inject_tag: json:"msg"
@@ -49,8 +56,8 @@ message CommonResponse{
 }
 
 service TaskService{
-    rpc TaskCreate(TaskRequest) returns(CommonResponse);
-    rpc TaskUpdate(TaskRequest) returns(CommonResponse);
+    rpc TaskCreate(TaskRequest) returns(TaskCommonResponse);
+    rpc TaskUpdate(TaskRequest) returns(TaskCommonResponse);
     rpc TaskShow(TaskRequest) returns(TasksDetailResponse);
-    rpc TaskDelete(TaskRequest) returns(CommonResponse);
+    rpc TaskDelete(TaskRequest) returns(TaskCommonResponse);
 }

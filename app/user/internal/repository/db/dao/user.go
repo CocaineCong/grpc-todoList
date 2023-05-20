@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/model"
-	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/pb/user"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 

@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/CocaineCong/grpc-todolist/idl/task/pb"
+	pb "github.com/CocaineCong/grpc-todolist/idl/pb/task"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/ctl"
@@ -18,13 +18,13 @@ func GetTaskList(ctx *gin.Context) {
 	user, err := ctl.GetUserInfo(ctx)
 	PanicIfTaskError(err)
 	tReq.UserID = user.Id
-	TaskService := ctx.Keys["task"].(pb.TaskServiceClient)
-	TaskResp, err := TaskService.TaskShow(context.Background(), &tReq)
+	taskService := ctx.Keys["task"].(pb.TaskServiceClient)
+	taskResp, err := taskService.TaskShow(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
+		Data:   taskResp,
+		Status: uint(taskResp.Code),
+		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
 }
@@ -35,13 +35,13 @@ func CreateTask(ctx *gin.Context) {
 	user, err := ctl.GetUserInfo(ctx)
 	PanicIfTaskError(err)
 	tReq.UserID = user.Id
-	TaskService := ctx.Keys["task"].(pb.TaskServiceClient)
-	TaskResp, err := TaskService.TaskCreate(context.Background(), &tReq)
+	taskService := ctx.Keys["task"].(pb.TaskServiceClient)
+	taskResp, err := taskService.TaskCreate(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
+		Data:   taskResp,
+		Status: uint(taskResp.Code),
+		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
 }
@@ -52,13 +52,13 @@ func UpdateTask(ctx *gin.Context) {
 	user, err := ctl.GetUserInfo(ctx)
 	PanicIfTaskError(err)
 	tReq.UserID = user.Id
-	TaskService := ctx.Keys["task"].(pb.TaskServiceClient)
-	TaskResp, err := TaskService.TaskUpdate(context.Background(), &tReq)
+	taskService := ctx.Keys["task"].(pb.TaskServiceClient)
+	taskResp, err := taskService.TaskUpdate(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
+		Data:   taskResp,
+		Status: uint(taskResp.Code),
+		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
 }
@@ -69,13 +69,13 @@ func DeleteTask(ctx *gin.Context) {
 	user, err := ctl.GetUserInfo(ctx)
 	PanicIfTaskError(err)
 	tReq.UserID = user.Id
-	TaskService := ctx.Keys["task"].(pb.TaskServiceClient)
-	TaskResp, err := TaskService.TaskDelete(context.Background(), &tReq)
+	taskService := ctx.Keys["task"].(pb.TaskServiceClient)
+	taskResp, err := taskService.TaskDelete(context.Background(), &tReq)
 	PanicIfTaskError(err)
 	r := res.Response{
-		Data:   TaskResp,
-		Status: uint(TaskResp.Code),
-		Msg:    e.GetMsg(uint(TaskResp.Code)),
+		Data:   taskResp,
+		Status: uint(taskResp.Code),
+		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
 }

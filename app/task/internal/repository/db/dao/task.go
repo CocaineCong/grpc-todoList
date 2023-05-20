@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/model"
-	taskPb "github.com/CocaineCong/grpc-todolist/idl/task/pb"
+	taskPb "github.com/CocaineCong/grpc-todolist/idl/pb/task"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/logger"
 )
 

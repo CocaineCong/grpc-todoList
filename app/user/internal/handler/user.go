@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"github.com/CocaineCong/grpc-todolist/app/user/internal/repository/db/dao"
-	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	pb "github.com/CocaineCong/grpc-todolist/idl/pb/user"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 )
 
@@ -13,7 +13,7 @@ var UserSrvIns *UserSrv
 var UserSrvOnce sync.Once
 
 type UserSrv struct {
-	userPb.UnimplementedUserServiceServer
+	pb.UnimplementedUserServiceServer
 }
 
 func GetUserSrv() *UserSrv {
@@ -23,15 +23,15 @@ func GetUserSrv() *UserSrv {
 	return UserSrvIns
 }
 
-func (u *UserSrv) UserLogin(ctx context.Context, req *userPb.UserRequest) (resp *userPb.UserDetailResponse, err error) {
-	resp = new(userPb.UserDetailResponse)
+func (u *UserSrv) UserLogin(ctx context.Context, req *pb.UserRequest) (resp *pb.UserDetailResponse, err error) {
+	resp = new(pb.UserDetailResponse)
 	resp.Code = e.SUCCESS
 	r, err := dao.NewUserDao(ctx).GetUserInfo(req)
 	if err != nil {
 		resp.Code = e.ERROR
 		return
 	}
-	resp.UserDetail = &userPb.UserResponse{
+	resp.UserDetail = &pb.UserResponse{
 		UserId:   r.UserID,
 		UserName: r.UserName,
 		NickName: r.UserName,
@@ -39,8 +39,8 @@ func (u *UserSrv) UserLogin(ctx context.Context, req *userPb.UserRequest) (resp 
 	return
 }
 
-func (u *UserSrv) UserRegister(ctx context.Context, req *userPb.UserRequest) (resp *userPb.CommonResponse, err error) {
-	resp = new(userPb.CommonResponse)
+func (u *UserSrv) UserRegister(ctx context.Context, req *pb.UserRequest) (resp *pb.UserCommonResponse, err error) {
+	resp = new(pb.UserCommonResponse)
 	resp.Code = e.SUCCESS
 	err = dao.NewUserDao(ctx).CreateUser(req)
 	if err != nil {
@@ -51,6 +51,6 @@ func (u *UserSrv) UserRegister(ctx context.Context, req *userPb.UserRequest) (re
 	return
 }
 
-func (u *UserSrv) UserLogout(ctx context.Context, request *userPb.UserRequest) (resp *userPb.CommonResponse, err error) {
+func (u *UserSrv) UserLogout(ctx context.Context, request *pb.UserRequest) (resp *pb.UserCommonResponse, err error) {
 	return
 }

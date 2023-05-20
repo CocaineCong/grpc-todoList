@@ -15,8 +15,8 @@ import (
 
 	"github.com/CocaineCong/grpc-todolist/app/gateway/routes"
 	"github.com/CocaineCong/grpc-todolist/config"
-	taskPb "github.com/CocaineCong/grpc-todolist/idl/task/pb"
-	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	taskPb "github.com/CocaineCong/grpc-todolist/idl/pb/task"
+	userPb "github.com/CocaineCong/grpc-todolist/idl/pb/user"
 	"github.com/CocaineCong/grpc-todolist/pkg/discovery"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/shutdown"
 )

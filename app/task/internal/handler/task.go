@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	"github.com/CocaineCong/grpc-todolist/app/task/internal/repository/db/dao"
-	taskPb "github.com/CocaineCong/grpc-todolist/idl/task/pb"
+	pb "github.com/CocaineCong/grpc-todolist/idl/pb/task"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 )
 
@@ -13,7 +13,7 @@ var TaskSrvIns *TaskSrv
 var TaskSrvOnce sync.Once
 
 type TaskSrv struct {
-	taskPb.UnimplementedTaskServiceServer
+	pb.UnimplementedTaskServiceServer
 }
 
 func GetTaskSrv() *TaskSrv {
@@ -22,8 +22,8 @@ func GetTaskSrv() *TaskSrv {
 	})
 	return TaskSrvIns
 }
-func (*TaskSrv) TaskCreate(ctx context.Context, req *taskPb.TaskRequest) (resp *taskPb.CommonResponse, err error) {
-	resp = new(taskPb.CommonResponse)
+func (*TaskSrv) TaskCreate(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskCommonResponse, err error) {
+	resp = new(pb.TaskCommonResponse)
 	resp.Code = e.SUCCESS
 	err = dao.NewTaskDao(ctx).CreateTask(req)
 	if err != nil {
@@ -36,7 +36,8 @@ func (*TaskSrv) TaskCreate(ctx context.Context, req *taskPb.TaskRequest) (resp *
 	return
 }
 
-func (*TaskSrv) TaskShow(ctx context.Context, req *taskPb.TaskRequest) (resp *taskPb.TasksDetailResponse, err error) {
+func (*TaskSrv) TaskShow(ctx context.Context, req *pb.TaskRequest) (resp *pb.TasksDetailResponse, err error) {
+	resp = new(pb.TasksDetailResponse)
 	r, err := dao.NewTaskDao(ctx).ListTaskByUserId(req.UserID)
 	resp.Code = e.SUCCESS
 	if err != nil {
@@ -44,7 +45,7 @@ func (*TaskSrv) TaskShow(ctx context.Context, req *taskPb.TaskRequest) (resp *ta
 		return
 	}
 	for i := range r {
-		resp.TaskDetail = append(resp.TaskDetail, &taskPb.TaskModel{
+		resp.TaskDetail = append(resp.TaskDetail, &pb.TaskModel{
 			TaskID:    r[i].TaskID,
 			UserID:    r[i].UserID,
 			Status:    int64(r[i].Status),
@@ -57,7 +58,8 @@ func (*TaskSrv) TaskShow(ctx context.Context, req *taskPb.TaskRequest) (resp *ta
 	return
 }
 
-func (*TaskSrv) TaskUpdate(ctx context.Context, req *taskPb.TaskRequest) (resp *taskPb.CommonResponse, err error) {
+func (*TaskSrv) TaskUpdate(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskCommonResponse, err error) {
+	resp = new(pb.TaskCommonResponse)
 	err = dao.NewTaskDao(ctx).UpdateTask(req)
 	if err != nil {
 		resp.Code = e.ERROR
@@ -69,7 +71,8 @@ func (*TaskSrv) TaskUpdate(ctx context.Context, req *taskPb.TaskRequest) (resp *
 	return
 }
 
-func (*TaskSrv) TaskDelete(ctx context.Context, req *taskPb.TaskRequest) (resp *taskPb.CommonResponse, err error) {
+func (*TaskSrv) TaskDelete(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskCommonResponse, err error) {
+	resp = new(pb.TaskCommonResponse)
 	resp.Code = e.SUCCESS
 	err = dao.NewTaskDao(ctx).DeleteTaskById(req.TaskID, req.UserID)
 	if err != nil {

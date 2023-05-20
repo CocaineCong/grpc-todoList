@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	userPb "github.com/CocaineCong/grpc-todolist/idl/user/pb"
+	pb "github.com/CocaineCong/grpc-todolist/idl/pb/user"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
 	"github.com/CocaineCong/grpc-todolist/pkg/res"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/jwt"
@@ -14,10 +14,10 @@ import (
 
 // UserRegister 用户注册
 func UserRegister(ctx *gin.Context) {
-	var userReq userPb.UserRequest
+	var userReq pb.UserRequest
 	PanicIfUserError(ctx.Bind(&userReq))
 	// 从gin.Key中取出服务实例
-	userService := ctx.Keys["user"].(userPb.UserServiceClient)
+	userService := ctx.Keys["user"].(pb.UserServiceClient)
 	userResp, err := userService.UserRegister(context.Background(), &userReq)
 	PanicIfUserError(err)
 	r := res.Response{
@@ -30,10 +30,10 @@ func UserRegister(ctx *gin.Context) {
 
 // UserLogin 用户登录
 func UserLogin(ctx *gin.Context) {
-	var userReq userPb.UserRequest
+	var userReq pb.UserRequest
 	PanicIfUserError(ctx.Bind(&userReq))
 	// 从gin.Key中取出服务实例
-	userService := ctx.Keys["user"].(userPb.UserServiceClient)
+	userService := ctx.Keys["user"].(pb.UserServiceClient)
 	userResp, err := userService.UserLogin(context.Background(), &userReq)
 	PanicIfUserError(err)
 	token, err := jwt.GenerateToken(userResp.UserDetail.UserId)
