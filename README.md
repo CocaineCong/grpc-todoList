@@ -2,6 +2,8 @@
 
 gin+grpc+gorm+etcd+mysql 的备忘录功能
 
+# 注意
+V2版本和v1版本的项目结构改变很大。
 
 # 项目主要依赖
 - gin
@@ -15,7 +17,29 @@ gin+grpc+gorm+etcd+mysql 的备忘录功能
 
 # 项目结构
 
-## 1. api-gateway 网关部分
+## 1.grpc_todolist 项目总体
+```
+grpc-todolist/
+├── app                   // 各个微服务
+│   ├── gateway           // 网关
+│   ├── task              // 任务模块微服务
+│   └── user              // 用户模块微服务
+├── bin                   // 二进制模块
+├── config                // 配置文件
+├── consts                // 定义的常量
+├── doc                   // 接口文档
+├── idl                   // protoc文件
+│   └──pb                 // 放置生成的pb文件
+├── logs                  // 放置打印日志模块
+├── pkg                   // 各种包
+│   ├── e                 // 统一错误状态码
+│   ├── discovery         // etcd服务注册、keep-alive、获取服务信息等等
+│   ├── res               // 统一response接口返回
+│   └── util              // 各种工具、JWT、Logger等等..
+└── types                 // 定义各种结构体
+```
+
+## 2.gateway 网关部分
 
 ```
 api-gateway/
@@ -36,7 +60,7 @@ api-gateway/
 └── wrappers              // 各个服务之间的熔断降级
 ```
 
-## 2. user && task 用户与任务模块
+## 3.user && task 用户与任务模块
 
 
 ```
