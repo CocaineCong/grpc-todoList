@@ -20,3 +20,4 @@ app/gateway/logs
 app/user/logs
 app/task/logs
 .idea
+bin

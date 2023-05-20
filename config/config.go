@@ -20,21 +20,21 @@ type Config struct {
 type Server struct {
 	Port      string `yaml:"port"`
 	Version   string `yaml:"version"`
-	JwtSecret string `yaml:"jwt_secret"`
+	JwtSecret string `yaml:"jwtSecret"`
 }
 
 type MySQL struct {
-	DriverName string `yaml:"driver_name"`
+	DriverName string `yaml:"driverName"`
 	Host       string `yaml:"host"`
 	Port       string `yaml:"port"`
 	Database   string `yaml:"database"`
-	UserName   string `yaml:"user_name"`
+	UserName   string `yaml:"username"`
 	Password   string `yaml:"password"`
 	Charset    string `yaml:"charset"`
 }
 
 type Redis struct {
-	UserName string `yaml:"user_name"`
+	UserName string `yaml:"userName"`
 	Address  string `yaml:"address"`
 	Password string `yaml:"password"`
 }

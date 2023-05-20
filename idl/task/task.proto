@@ -1,12 +1,12 @@
 syntax="proto3";
-package pb;
-option go_package = "/internal/user;user";
+option go_package = "task/";
 
 //window: protoc -I idl/task/pb idl/task/*.proto --go_out=plugins=grpc:.
-//mac:  protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative ./idl/task/task.proto
+//mac: protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative ./idl/task/task.proto
+//mac: protoc-go-inject-tag -input=./idl/task/pb/task.pb.go
 
 message TaskModel {
-    // @inject_tag: json:"favorite_id"
+    // @inject_tag: json:"task_id"
     int64 TaskID=1;
     // @inject_tag: json:"user_id"
     int64 UserID=2;
@@ -33,13 +33,18 @@ message TaskRequest{
 }
 
 message TasksDetailResponse{
+    // @inject_tag: json:"task_model"
     repeated TaskModel TaskDetail=1;
+    // @inject_tag: json:"code"
     int64 Code=2;
 }
 
 message CommonResponse{
+    // @inject_tag: json:"code"
     int64 Code=1;
+    // @inject_tag: json:"msg"
     string Msg=2;
+    // @inject_tag: json:"data"
     string Data=3;
 }
 

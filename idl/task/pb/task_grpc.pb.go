@@ -39,7 +39,7 @@ func NewTaskServiceClient(cc grpc.ClientConnInterface) TaskServiceClient {
 
 func (c *taskServiceClient) TaskCreate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
 	out := new(CommonResponse)
-	err := c.cc.Invoke(ctx, "/pb.TaskService/TaskCreate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/TaskService/TaskCreate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *taskServiceClient) TaskCreate(ctx context.Context, in *TaskRequest, opt
 
 func (c *taskServiceClient) TaskUpdate(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
 	out := new(CommonResponse)
-	err := c.cc.Invoke(ctx, "/pb.TaskService/TaskUpdate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/TaskService/TaskUpdate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *taskServiceClient) TaskUpdate(ctx context.Context, in *TaskRequest, opt
 
 func (c *taskServiceClient) TaskShow(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*TasksDetailResponse, error) {
 	out := new(TasksDetailResponse)
-	err := c.cc.Invoke(ctx, "/pb.TaskService/TaskShow", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/TaskService/TaskShow", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *taskServiceClient) TaskShow(ctx context.Context, in *TaskRequest, opts 
 
 func (c *taskServiceClient) TaskDelete(ctx context.Context, in *TaskRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
 	out := new(CommonResponse)
-	err := c.cc.Invoke(ctx, "/pb.TaskService/TaskDelete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/TaskService/TaskDelete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func _TaskService_TaskCreate_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.TaskService/TaskCreate",
+		FullMethod: "/TaskService/TaskCreate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskServiceServer).TaskCreate(ctx, req.(*TaskRequest))
@@ -141,7 +141,7 @@ func _TaskService_TaskUpdate_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.TaskService/TaskUpdate",
+		FullMethod: "/TaskService/TaskUpdate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskServiceServer).TaskUpdate(ctx, req.(*TaskRequest))
@@ -159,7 +159,7 @@ func _TaskService_TaskShow_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.TaskService/TaskShow",
+		FullMethod: "/TaskService/TaskShow",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskServiceServer).TaskShow(ctx, req.(*TaskRequest))
@@ -177,7 +177,7 @@ func _TaskService_TaskDelete_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.TaskService/TaskDelete",
+		FullMethod: "/TaskService/TaskDelete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TaskServiceServer).TaskDelete(ctx, req.(*TaskRequest))
@@ -189,7 +189,7 @@ func _TaskService_TaskDelete_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var TaskService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.TaskService",
+	ServiceName: "TaskService",
 	HandlerType: (*TaskServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

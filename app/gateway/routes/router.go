@@ -3,11 +3,11 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 
-	"api-gateway/internal/handler"
-	"api-gateway/middleware"
-
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
+
+	"github.com/CocaineCong/grpc-todolist/app/gateway/internal/handler"
+	"github.com/CocaineCong/grpc-todolist/app/gateway/middleware"
 )
 
 func NewRouter(service ...interface{}) *gin.Engine {

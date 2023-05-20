@@ -40,6 +40,7 @@ func (u *UserSrv) UserLogin(ctx context.Context, req *userPb.UserRequest) (resp 
 }
 
 func (u *UserSrv) UserRegister(ctx context.Context, req *userPb.UserRequest) (resp *userPb.CommonResponse, err error) {
+	resp = new(userPb.CommonResponse)
 	resp.Code = e.SUCCESS
 	err = dao.NewUserDao(ctx).CreateUser(req)
 	if err != nil {
