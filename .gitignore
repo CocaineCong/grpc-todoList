@@ -21,3 +21,4 @@ app/user/logs
 app/task/logs
 .idea
 bin
+logs
