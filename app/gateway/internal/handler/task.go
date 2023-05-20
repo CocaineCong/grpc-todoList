@@ -23,7 +23,7 @@ func GetTaskList(ctx *gin.Context) {
 	PanicIfTaskError(err)
 	r := res.Response{
 		Data:   taskResp,
-		Status: uint(taskResp.Code),
+		Status: int(taskResp.Code),
 		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
@@ -40,7 +40,7 @@ func CreateTask(ctx *gin.Context) {
 	PanicIfTaskError(err)
 	r := res.Response{
 		Data:   taskResp,
-		Status: uint(taskResp.Code),
+		Status: int(taskResp.Code),
 		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
@@ -55,10 +55,11 @@ func UpdateTask(ctx *gin.Context) {
 	taskService := ctx.Keys["task"].(pb.TaskServiceClient)
 	taskResp, err := taskService.TaskUpdate(context.Background(), &tReq)
 	PanicIfTaskError(err)
+	taskResp.Code = e.SUCCESS
 	r := res.Response{
 		Data:   taskResp,
-		Status: uint(taskResp.Code),
-		Msg:    e.GetMsg(uint(taskResp.Code)),
+		Status: int(taskResp.Code),
+		Msg:    e.GetMsg(e.SUCCESS),
 	}
 	ctx.JSON(http.StatusOK, r)
 }
@@ -74,7 +75,7 @@ func DeleteTask(ctx *gin.Context) {
 	PanicIfTaskError(err)
 	r := res.Response{
 		Data:   taskResp,
-		Status: uint(taskResp.Code),
+		Status: int(taskResp.Code),
 		Msg:    e.GetMsg(uint(taskResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)

@@ -25,20 +25,20 @@ type TaskModel struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @inject_tag: json:"task_id"
-	TaskID int64 `protobuf:"varint,1,opt,name=TaskID,proto3" json:"task_id"`
-	// @inject_tag: json:"user_id"
-	UserID int64 `protobuf:"varint,2,opt,name=UserID,proto3" json:"user_id"`
-	// @inject_tag: json:"status"
-	Status int64 `protobuf:"varint,3,opt,name=Status,proto3" json:"status"`
-	// @inject_tag: json:"title"
-	Title string `protobuf:"bytes,4,opt,name=Title,proto3" json:"title"`
-	// @inject_tag: json:"content"
-	Content string `protobuf:"bytes,5,opt,name=Content,proto3" json:"content"`
-	// @inject_tag: json:"start_time"
-	StartTime int64 `protobuf:"varint,6,opt,name=StartTime,proto3" json:"start_time"`
-	// @inject_tag: json:"end_time"
-	EndTime int64 `protobuf:"varint,7,opt,name=EndTime,proto3" json:"end_time"`
+	// @inject_tag: json:"task_id" form:"task_id"
+	TaskID int64 `protobuf:"varint,1,opt,name=TaskID,proto3" json:"task_id" form:"task_id"`
+	// @inject_tag: json:"user_id" form:"user_id"
+	UserID int64 `protobuf:"varint,2,opt,name=UserID,proto3" json:"user_id" form:"user_id"`
+	// @inject_tag: json:"status" form:"status"
+	Status int64 `protobuf:"varint,3,opt,name=Status,proto3" json:"status" form:"status"`
+	// @inject_tag: json:"title" form:"title"
+	Title string `protobuf:"bytes,4,opt,name=Title,proto3" json:"title" form:"title"`
+	// @inject_tag: json:"content" form:"content"
+	Content string `protobuf:"bytes,5,opt,name=Content,proto3" json:"content" form:"content"`
+	// @inject_tag: json:"start_time" form:"start_time"
+	StartTime int64 `protobuf:"varint,6,opt,name=StartTime,proto3" json:"start_time" form:"start_time"`
+	// @inject_tag: json:"end_time" form:"end_time"
+	EndTime int64 `protobuf:"varint,7,opt,name=EndTime,proto3" json:"end_time" form:"end_time"`
 }
 
 func (x *TaskModel) Reset() {
@@ -127,20 +127,20 @@ type TaskRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @inject_tag: json:"task_id"
-	TaskID int64 `protobuf:"varint,1,opt,name=TaskID,proto3" json:"task_id"`
-	// @inject_tag: json:"user_id"
-	UserID int64 `protobuf:"varint,2,opt,name=UserID,proto3" json:"user_id"`
-	// @inject_tag: json:"status"
-	Status int64 `protobuf:"varint,3,opt,name=Status,proto3" json:"status"`
-	// @inject_tag: json:"title"
-	Title string `protobuf:"bytes,4,opt,name=Title,proto3" json:"title"`
-	// @inject_tag: json:"content"
-	Content string `protobuf:"bytes,5,opt,name=Content,proto3" json:"content"`
-	// @inject_tag: json:"start_time"
-	StartTime int64 `protobuf:"varint,6,opt,name=StartTime,proto3" json:"start_time"`
-	// @inject_tag: json:"end_time"
-	EndTime int64 `protobuf:"varint,7,opt,name=EndTime,proto3" json:"end_time"`
+	// @inject_tag: json:"task_id" form:"task_id"
+	TaskID int64 `protobuf:"varint,1,opt,name=TaskID,proto3" json:"task_id" form:"task_id"`
+	// @inject_tag: json:"user_id" form:"user_id"
+	UserID int64 `protobuf:"varint,2,opt,name=UserID,proto3" json:"user_id" form:"user_id"`
+	// @inject_tag: json:"status" form:"status"
+	Status int64 `protobuf:"varint,3,opt,name=Status,proto3" json:"status" form:"status"`
+	// @inject_tag: json:"title" form:"title"
+	Title string `protobuf:"bytes,4,opt,name=Title,proto3" json:"title" form:"title"`
+	// @inject_tag: json:"content" form:"content"
+	Content string `protobuf:"bytes,5,opt,name=Content,proto3" json:"content" form:"content"`
+	// @inject_tag: json:"start_time" form:"start_time"
+	StartTime int64 `protobuf:"varint,6,opt,name=StartTime,proto3" json:"start_time" form:"start_time"`
+	// @inject_tag: json:"end_time" form:"end_time"
+	EndTime int64 `protobuf:"varint,7,opt,name=EndTime,proto3" json:"end_time" form:"end_time"`
 }
 
 func (x *TaskRequest) Reset() {
@@ -229,10 +229,10 @@ type TasksDetailResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @inject_tag: json:"task_model"
-	TaskDetail []*TaskModel `protobuf:"bytes,1,rep,name=TaskDetail,proto3" json:"task_model"`
-	// @inject_tag: json:"code"
-	Code int64 `protobuf:"varint,2,opt,name=Code,proto3" json:"code"`
+	// @inject_tag: json:"task_model" form:"task_model"
+	TaskDetail []*TaskModel `protobuf:"bytes,1,rep,name=TaskDetail,proto3" json:"task_model" form:"task_model"`
+	// @inject_tag: json:"code" form:"code"
+	Code int64 `protobuf:"varint,2,opt,name=Code,proto3" json:"code" form:"code"`
 }
 
 func (x *TasksDetailResponse) Reset() {
@@ -286,12 +286,12 @@ type TaskCommonResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// @inject_tag: json:"code"
-	Code int64 `protobuf:"varint,1,opt,name=Code,proto3" json:"code"`
-	// @inject_tag: json:"msg"
-	Msg string `protobuf:"bytes,2,opt,name=Msg,proto3" json:"msg"`
-	// @inject_tag: json:"data"
-	Data string `protobuf:"bytes,3,opt,name=Data,proto3" json:"data"`
+	// @inject_tag: json:"code" form:"code"
+	Code int64 `protobuf:"varint,1,opt,name=Code,proto3" json:"code" form:"code"`
+	// @inject_tag: json:"msg" form:"msg"
+	Msg string `protobuf:"bytes,2,opt,name=Msg,proto3" json:"msg" form:"msg"`
+	// @inject_tag: json:"data" form:"data"
+	Data string `protobuf:"bytes,3,opt,name=Data,proto3" json:"data" form:"data"`
 }
 
 func (x *TaskCommonResponse) Reset() {

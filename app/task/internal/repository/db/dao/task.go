@@ -52,18 +52,14 @@ func (dao *TaskDao) DeleteTaskById(taskId, userId int64) (err error) {
 }
 
 func (dao *TaskDao) UpdateTask(req *taskPb.TaskRequest) (err error) {
-	t := model.Task{}
+	taskUpdateMap := make(map[string]interface{})
+	taskUpdateMap["title"] = req.Title
+	taskUpdateMap["content"] = req.Content
+	taskUpdateMap["status"] = int(req.Status)
+	taskUpdateMap["start_time"] = req.StartTime
+	taskUpdateMap["end_time"] = req.EndTime
 	err = dao.Model(&model.Task{}).
-		Where("task_id=?", req.TaskID).First(&t).Error
-	if err != nil {
-		return
-	}
-	t.Title = req.Title
-	t.Content = req.Content
-	t.Status = int(req.Status)
-	t.StartTime = req.StartTime
-	t.EndTime = req.EndTime
-	err = dao.Save(&t).Error
+		Where("task_id=?", req.TaskID).Updates(&taskUpdateMap).Error
 
 	return
 }

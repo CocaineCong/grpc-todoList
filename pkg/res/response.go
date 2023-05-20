@@ -10,7 +10,7 @@ import (
 
 // Response 基础序列化器
 type Response struct {
-	Status uint        `json:"status"`
+	Status int         `json:"status"`
 	Data   interface{} `json:"data"`
 	Msg    string      `json:"msg"`
 	Error  string      `json:"error"`
@@ -19,7 +19,7 @@ type Response struct {
 // DataList 带有总数的Data结构
 type DataList struct {
 	Item  interface{} `json:"item"`
-	Total uint        `json:"total"`
+	Total int64       `json:"total"`
 }
 
 // TokenData 带有token的Data结构

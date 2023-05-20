@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/CocaineCong/grpc-todolist/consts"
 	"github.com/CocaineCong/grpc-todolist/pkg/e"
-	"github.com/CocaineCong/grpc-todolist/pkg/util/ctl"
 	"github.com/CocaineCong/grpc-todolist/pkg/util/jwt"
 )
 
@@ -41,8 +41,7 @@ func JWT() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		c.Request = c.Request.WithContext(ctl.NewContext(c.Request.Context(), &ctl.UserInfo{Id: claims.UserID}))
-		ctl.InitUserInfo(c.Request.Context())
+		c.Set(consts.UserIdKey, claims.UserID)
 		c.Next()
 	}
 }

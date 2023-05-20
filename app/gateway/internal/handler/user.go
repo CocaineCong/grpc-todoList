@@ -22,7 +22,7 @@ func UserRegister(ctx *gin.Context) {
 	PanicIfUserError(err)
 	r := res.Response{
 		Data:   userResp,
-		Status: uint(userResp.Code),
+		Status: int(userResp.Code),
 		Msg:    e.GetMsg(uint(userResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)
@@ -37,9 +37,10 @@ func UserLogin(ctx *gin.Context) {
 	userResp, err := userService.UserLogin(context.Background(), &userReq)
 	PanicIfUserError(err)
 	token, err := jwt.GenerateToken(userResp.UserDetail.UserId)
+	PanicIfUserError(err)
 	r := res.Response{
 		Data:   res.TokenData{User: userResp.UserDetail, Token: token},
-		Status: uint(userResp.Code),
+		Status: int(userResp.Code),
 		Msg:    e.GetMsg(uint(userResp.Code)),
 	}
 	ctx.JSON(http.StatusOK, r)

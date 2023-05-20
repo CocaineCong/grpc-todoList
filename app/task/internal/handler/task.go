@@ -60,6 +60,7 @@ func (*TaskSrv) TaskShow(ctx context.Context, req *pb.TaskRequest) (resp *pb.Tas
 
 func (*TaskSrv) TaskUpdate(ctx context.Context, req *pb.TaskRequest) (resp *pb.TaskCommonResponse, err error) {
 	resp = new(pb.TaskCommonResponse)
+	resp.Code = e.SUCCESS
 	err = dao.NewTaskDao(ctx).UpdateTask(req)
 	if err != nil {
 		resp.Code = e.ERROR
