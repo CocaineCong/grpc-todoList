@@ -23,13 +23,13 @@ func UserLogin(ctx context.Context, req *userPb.UserRequest) (resp *userPb.UserR
 }
 
 func UserRegister(ctx context.Context, req *userPb.UserRequest) (resp *userPb.UserCommonResponse, err error) {
-	r, err := UserClient.UserRegister(ctx, req)
+	resp, err = UserClient.UserRegister(ctx, req)
 	if err != nil {
 		return
 	}
 
-	if r.Code != e.SUCCESS {
-		err = errors.New(r.Msg)
+	if resp.Code != e.SUCCESS {
+		err = errors.New(resp.Msg)
 		return
 	}
 
