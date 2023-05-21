@@ -22,7 +22,7 @@ func GetTaskList(ctx *gin.Context) {
 		return
 	}
 	req.UserID = user.Id
-	r, err := rpc.TaskClient.TaskShow(ctx, &req)
+	r, err := rpc.TaskList(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskShow RPC调用错误"))
 		return
@@ -43,7 +43,7 @@ func CreateTask(ctx *gin.Context) {
 		return
 	}
 	req.UserID = user.Id
-	r, err := rpc.TaskClient.TaskShow(ctx, &req)
+	r, err := rpc.TaskCreate(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskShow RPC调用错误"))
 		return
@@ -64,7 +64,7 @@ func UpdateTask(ctx *gin.Context) {
 		return
 	}
 	req.UserID = user.Id
-	r, err := rpc.TaskClient.TaskUpdate(ctx, &req)
+	r, err := rpc.TaskUpdate(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskShow RPC调用错误"))
 		return
@@ -85,7 +85,7 @@ func DeleteTask(ctx *gin.Context) {
 		return
 	}
 	req.UserID = user.Id
-	r, err := rpc.TaskClient.TaskDelete(ctx, &req)
+	r, err := rpc.TaskDelete(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "TaskShow RPC调用错误"))
 		return
