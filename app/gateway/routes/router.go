@@ -6,7 +6,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 
-	"github.com/CocaineCong/grpc-todolist/app/gateway/internal/handler"
+	"github.com/CocaineCong/grpc-todolist/app/gateway/internal/http"
 	"github.com/CocaineCong/grpc-todolist/app/gateway/middleware"
 )
 
@@ -21,18 +21,18 @@ func NewRouter() *gin.Engine {
 			context.JSON(200, "success")
 		})
 		// 用户服务
-		v1.POST("/user/register", handler.UserRegister)
-		v1.POST("/user/login", handler.UserLogin)
+		v1.POST("/user/register", http.UserRegister)
+		v1.POST("/user/login", http.UserLogin)
 
 		// 需要登录保护
 		authed := v1.Group("/")
 		authed.Use(middleware.JWT())
 		{
 			// 任务模块
-			authed.GET("task", handler.GetTaskList)
-			authed.POST("task", handler.CreateTask)
-			authed.PUT("task", handler.UpdateTask)
-			authed.DELETE("task", handler.DeleteTask)
+			authed.GET("task", http.GetTaskList)
+			authed.POST("task", http.CreateTask)
+			authed.PUT("task", http.UpdateTask)
+			authed.DELETE("task", http.DeleteTask)
 		}
 	}
 	return ginRouter
