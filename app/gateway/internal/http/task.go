@@ -16,7 +16,7 @@ func GetTaskList(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数错误"))
 		return
 	}
-	user, err := ctl.GetUserInfo(ctx)
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
@@ -37,7 +37,7 @@ func CreateTask(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数错误"))
 		return
 	}
-	user, err := ctl.GetUserInfo(ctx)
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
@@ -58,7 +58,7 @@ func UpdateTask(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数错误"))
 		return
 	}
-	user, err := ctl.GetUserInfo(ctx)
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
@@ -79,7 +79,7 @@ func DeleteTask(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, ctl.RespError(ctx, err, "绑定参数错误"))
 		return
 	}
-	user, err := ctl.GetUserInfo(ctx)
+	user, err := ctl.GetUserInfo(ctx.Request.Context())
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, ctl.RespError(ctx, err, "获取用户信息错误"))
 		return
