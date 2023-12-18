@@ -92,7 +92,14 @@ func (r *Register) register() error {
 
 // Stop stop register
 func (r *Register) Stop() {
-	r.closeCh <- struct{}{}
+	//r.closeCh <- struct{}{}
+	if err := r.unregister(); err != nil {
+		r.logger.Error("unregister failed, error: ", err)
+	}
+
+	if _, err := r.cli.Revoke(context.Background(), r.leasesID); err != nil {
+		r.logger.Error("revoke failed, error: ", err)
+	}
 }
 
 // unregister 删除节点
@@ -106,14 +113,15 @@ func (r *Register) keepAlive() {
 
 	for {
 		select {
-		case <-r.closeCh:
-			if err := r.unregister(); err != nil {
-				r.logger.Error("unregister failed, error: ", err)
-			}
-
-			if _, err := r.cli.Revoke(context.Background(), r.leasesID); err != nil {
-				r.logger.Error("revoke failed, error: ", err)
-			}
+		// issues:https://github.com/CocaineCong/grpc-todoList/issues/19
+		// case <-r.closeCh:
+		//	if err := r.unregister(); err != nil {
+		//		r.logger.Error("unregister failed, error: ", err)
+		//	}
+		//
+		//	if _, err := r.cli.Revoke(context.Background(), r.leasesID); err != nil {
+		//		r.logger.Error("revoke failed, error: ", err)
+		//	}
 		case res := <-r.keepAliveCh:
 			if res == nil {
 				if err := r.register(); err != nil {
