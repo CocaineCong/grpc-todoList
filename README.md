@@ -1,7 +1,9 @@
 # gRPC-todoList
 
 gin+grpc+gorm+etcd+mysql 的备忘录功能
-
+## todo
+### 了解实际中grpc客户端的链接管理
+### 了解项目结构
 # 注意
 V2版本和v1版本的项目结构改变很大。
 
