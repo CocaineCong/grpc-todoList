@@ -1,0 +1,44 @@
+server:
+  port: :4000
+  version: 1.0
+  jwtSecret: 38324
+
+mysql:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 3306
+  database: grpc_todolist
+  username: grpc_todolist
+  password: grpc_todolist
+  charset: utf8mb4
+
+redis:
+  user_name: default
+  address: 127.0.0.1:6379
+  password:
+
+etcd:
+  address: 127.0.0.1:2379
+
+services:
+  gateway:
+    name: gateway
+    loadBalance: true
+    addr:
+      - 127.0.0.1:10001
+  user:
+    name: user
+    loadBalance: false
+    addr:
+      - 127.0.0.1:10002
+  task:
+    name: task
+    loadBalance: false
+    addr:
+      - 127.0.0.1:10003
+
+domain:
+  user:
+    name: user
+  task:
+    name: task
